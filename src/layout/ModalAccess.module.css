@@ -1,0 +1,31 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  background-color: rgba(0, 0, 0, 0.4);
+  justify-content: center;
+  align-items: center;
+}
+.header {
+  margin-bottom: 2rem;
+}
+.headerContent {
+  font-size: 0.8rem;
+  float: right;
+}
+.modal {
+  background: #fff;
+  padding: 20px;
+  border-radius: 15px;
+}
+.closeBtn {
+  color: red !important;
+  margin-top: -10px;
+}
+.contentModal {
+  clear: both;
+  font-size: 0.6rem;
+}

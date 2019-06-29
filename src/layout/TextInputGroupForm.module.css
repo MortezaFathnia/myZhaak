@@ -1,0 +1,10 @@
+.inputForm {
+  border-radius: 25px !important;
+  text-align: center;
+  line-height: 1.5;
+  font-size: 0.7rem !important;
+  padding: 5px 4px !important;
+}
+.labelForm {
+  line-height: 2;
+}

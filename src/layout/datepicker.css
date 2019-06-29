@@ -1,0 +1,13 @@
+.JDatePicker {
+  background: #6bb5ef !important;
+}
+.days-titles,
+.JC-months,
+.JDheader {
+  color: #fff;
+}
+.JDatePicker .day-items:hover,
+.JDatePicker .day-items.selected {
+  background: #ededed !important;
+  color: #6bb5ef;
+}

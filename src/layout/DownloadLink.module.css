@@ -1,0 +1,12 @@
+.downloadLink {
+  color: #737381 !important;
+  border-radius: 5px;
+  padding: 8px 27px;
+  border: 1px solid #737381;
+  display: block;
+  text-align: center;
+}
+.iconDownload {
+  margin-top: -2px;
+  float: right;
+}

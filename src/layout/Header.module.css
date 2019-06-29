@@ -1,0 +1,60 @@
+.listLink li {
+  margin: 13px 0 0 15px;
+  position: relative;
+}
+.listLink li:last-child {
+  margin-left: 0;
+}
+.divider {
+  float: right;
+  margin-left: 10px;
+  font-size: 16px;
+}
+.link {
+  padding: 0 !important;
+  color: #49525f;
+}
+.link:hover {
+  color: #3b414b;
+}
+.active {
+  color: #4caf50;
+  transition: all 0.5;
+}
+.active:hover {
+  color: #4caf50;
+}
+.active::after {
+  content: '';
+  width: 69px;
+  background: #4caf50;
+  height: 2px;
+  display: block;
+  position: absolute;
+  top: 42px;
+}
+.customNavbar {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  background: #fff;
+}
+.brand {
+  width: 75px;
+}
+.loginLink {
+  color: #fff !important;
+}
+.loginLink::before {
+  content: '';
+  width: 16px;
+  height: 16px;
+  background: url('../assets/svg/user-symbol.svg');
+  margin: 0 0 0 5px;
+  float: right;
+}
+.loginItem {
+  border-radius: 20px;
+  padding: 10px;
+  margin-top: 0 !important;
+  float: right;
+  background: #4caf50;
+}

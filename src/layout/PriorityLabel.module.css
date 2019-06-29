@@ -1,0 +1,11 @@
+.normal,
+.important,
+.high {
+  font-size: 0.6rem;
+  padding: 2px 5px;
+  border-radius: 15px;
+}
+.normal {
+  background: rgba(248, 231, 28, 0.6);
+  border: 1px solid #ecdd25;
+}

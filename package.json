@@ -1,0 +1,53 @@
+{
+  "name": "adminpanel",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "apexcharts": "^3.8.1",
+    "axios": "^0.18.0",
+    "bootstrap": "^4.3.1",
+    "classname": "0.0.0",
+    "firebase": "^6.1.0",
+    "jalali-moment": "^3.3.2",
+    "moment-jalaali": "^0.8.3",
+    "node-sass": "^4.12.0",
+    "rc-color-picker": "^1.2.6",
+    "react": "^16.8.6",
+    "react-advance-jalaali-datepicker": "^1.2.2",
+    "react-countdown-now": "^2.1.0",
+    "react-datepicker2": "^3.0.0-alpha.5",
+    "react-dom": "^16.8.6",
+    "react-loading-overlay": "^1.0.1",
+    "react-modal": "^3.8.1",
+    "react-router-dom": "^5.0.0",
+    "react-scripts": "3.0.1",
+    "react-tiny-popover": "^3.4.2",
+    "react-toastify": "^5.1.1",
+    "universal-cookie": "^4.0.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
+  "main": "index.js",
+  "author": "",
+  "license": "ISC"
+}

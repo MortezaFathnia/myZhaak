@@ -1,0 +1,12 @@
+.input,
+.center {
+  position: absolute;
+  right: 0;
+  left: 50px;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
+.center {
+  left: 0;
+}

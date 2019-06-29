@@ -1,0 +1,15 @@
+.containerColorPicker {
+  display: block !important;
+}
+.colorPickerElem {
+  border-radius: 25px !important;
+  text-align: center;
+  line-height: 2;
+  font-size: 0.7rem !important;
+  padding: 5px 4px !important;
+  border: 1px solid #ced4da;
+  background: #fff !important;
+  display: block !important;
+  height: auto !important;
+  width: 100% !important;
+}

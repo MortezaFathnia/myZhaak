@@ -1,0 +1,57 @@
+.inputFile {
+  display: none;
+}
+.labelUpload {
+  border: 1px solid #6bb5ef;
+  border-radius: 15px;
+  padding: 8px 20px;
+  display: block;
+  text-align: center;
+  margin-bottom: 10px;
+  color: #6bb5ef !important;
+}
+.iconUpload {
+  float: right;
+  margin-top: -2px;
+}
+.spinner {
+  width: 1.5rem !important;
+  height: 1.5rem !important;
+  float: right !important;
+  margin-left: 10px !important;
+}
+.fileTitle {
+  width: 70%;
+  background-color: rgba(107, 181, 239, 0.2);
+  display: flex;
+  flex-direction: column;
+  float: right;
+}
+.fileName,
+.fileSize {
+  float: right;
+  margin-bottom: 0;
+  color: #6bb5ef;
+  padding-right: 6px;
+}
+.fileName {
+  font-size: 12px;
+  font-weight: bold;
+}
+.fileSize {
+  font-size: 8px;
+}
+.fileType {
+  display: inline-block;
+  text-align: center;
+  line-height: 2;
+  background: #6bb5ef;
+  color: #fff;
+  padding: 4px 7px;
+}
+.deleteBtn {
+  color: red !important;
+  margin: 0 !important;
+  float: left;
+  padding: 0 !important;
+}
