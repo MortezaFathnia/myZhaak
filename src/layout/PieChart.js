@@ -1,22 +1,15 @@
 import React, { Component } from 'react';
 import ApexCharts from 'apexcharts';
-class LineChart extends Component {
+class PieChart extends Component {
   constructor(props) {
     super(props);
     this.state = {
       options: {
         chart: {
-          type: 'bar'
+          type: 'pie'
         },
-        series: [
-          {
-            name: 'sales',
-            data: props.data
-          }
-        ],
-        xaxis: {
-          categories: props.categories
-        }
+        series: props.data,
+        labels: props.categories
       }
     };
   }
@@ -31,4 +24,4 @@ class LineChart extends Component {
     return <div id="chart" />;
   }
 }
-export default LineChart;
+export default PieChart;

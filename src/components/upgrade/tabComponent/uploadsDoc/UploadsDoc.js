@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import DownloadLink from '../../../../layout/DownloadLink';
 import UploadBtn from '../../../../layout/UploadBtn';
 import Loading from '../../../../layout/Loading';
-import AvatarSabteDarkhast from '../../../../assets/svg/avatarSabteDarkhast';
 import EhrazHoviatAvatar from '../../../../assets/svg/ehrazHoviatAvatar';
 import { Consumer } from '../../../../context';
 import { toast } from 'react-toastify';

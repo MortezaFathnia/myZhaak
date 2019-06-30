@@ -119,6 +119,7 @@ textarea {
   color: #fff !important;
   border: none !important;
   box-shadow: none !important;
+  padding: 7px 14px;
 }
 .datepicker-input {
   border-radius: 25px;
@@ -129,6 +130,50 @@ textarea {
   border: 1px solid #ced4da;
   width: 100%;
   text-align: right;
+}
+fieldset.zhaak_fieldset {
+  margin: 20px 0px;
+  background: #eceff1;
+  padding: 15px;
+  border-radius: 5px;
+  border: 1px solid #cfd8dc;
+  margin-top: 0px;
+  width: 100%;
+  border-radius: 0px;
+}
+
+legend.zhaak_legend {
+  padding: 10px;
+  background: #ffffff;
+  border: 1px solid #cfd8dc;
+  box-shadow: -2px 2px 11px #cfd8dc;
+  font-weight: bold;
+  border-radius: 5px;
+  font-size: 14px;
+  text-align: right;
+  margin: 30px 0px;
+  color: #546e7a;
+  display: inline-block;
+  width: auto;
+}
+.apexcharts-tooltip * {
+  font-family: 'iran', 'yekan', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+}
+.apexcharts-tooltip-marker {
+  margin: 0 0 0 10px;
+}
+.aparnik_multiSelect {
+  text-align: right;
+}
+.aparnik_multiSelect .aparnik__control {
+  min-height: 30px;
+  border-radius: 15px;
+}
+.aparnik_multiSelect .aparnik__indicator {
+  padding: 2px 4px;
+}
+.apexcharts-legend-marker {
+  margin-left: 5px;
 }
 @media (max-width: 768px) {
   body {

@@ -31,7 +31,10 @@ class Header extends Component {
             <div className={`row ${classes.navLeft}`}>
               <div className={`col-lg-8 d-none d-md-block`}>
                 <a href="tel:0513847591" className={`${classes.phone}`}>
-                  پشتیبانی: 051-3847591
+                  <span dir="ltr" className={`float-left`}>
+                    0513-
+                  </span>
+                  پشتیبانی: 847591
                 </a>
               </div>
               <div

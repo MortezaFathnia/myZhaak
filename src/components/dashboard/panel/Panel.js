@@ -37,7 +37,6 @@ class Panel extends Component {
     }
   };
   componentDidMount() {
-    console.log(window.innerWidth);
     if (window.innerWidth < 576) {
       this.setState({ collapsed: false });
     }

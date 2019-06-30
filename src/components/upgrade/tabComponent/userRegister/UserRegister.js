@@ -196,11 +196,9 @@ class UserRegister extends Component {
                     format="jYYYY/jMM/jDD"
                     onChange={this.change.bind(this)}
                     id="datePicker"
-                    preSelected={
-                      '1398/04/03' /* moment(today, 'YYYY/MM/DD')
-                        .locale('fa')
-                        .format('YYYY/MM/DD') */
-                    }
+                    preSelected={moment(today, 'YYYY/MM/DD')
+                      .locale('fa')
+                      .format('YYYY/MM/DD')}
                     cancelOnBackgroundClick="App"
                   />
                   {/*  <div className={`col-8`}>
