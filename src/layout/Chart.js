@@ -3,6 +3,10 @@ import ApexCharts from 'apexcharts';
 class Chart extends Component {
   constructor(props) {
     super(props);
+    this.intialConfig(props);
+    this.chart = '';
+  }
+  intialConfig = props => {
     switch (props.type) {
       case 'bar':
         this.state = {
@@ -34,14 +38,31 @@ class Chart extends Component {
         };
         break;
     }
-  }
-  componentDidMount() {
-    let chart = new ApexCharts(
+  };
+  chartRender = () => {
+    this.intialConfig(this.props);
+    if (this.chart) {
+      this.chart.destroy();
+    }
+    this.chart = new ApexCharts(
       document.querySelector('#chart'),
       this.state.options
     );
-    chart.render();
+
+    this.chart.render();
+    // this.state.exictedChart = true;
+  };
+  // componentWillReceiveProps(nextProps) {
+  //   console.log('componentWillReceiveProps', nextProps);
+  // }
+  componentDidMount() {
+    this.chartRender(this);
   }
+  // componentWillUpdate(nextProps, nextState) {
+  //   console.log(nextProps, nextState);
+  //   this.intialConfig(nextProps);
+  //   this.chartRender.bind(this);
+  // }
   render() {
     return <div id="chart" />;
   }

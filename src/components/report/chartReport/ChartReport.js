@@ -5,32 +5,33 @@ import Cookies from 'universal-cookie';
 import Chart from '../../../layout/Chart';
 import SelectOption from '../../../layout/SelectOption';
 import Settings from '../../../assets/svg/settings';
+import Logo from '../../../assets/svg/logo';
 
 import classes from './ChartReport.module.sass';
-import { throwStatement } from '@babel/types';
 const cookies = new Cookies();
 class ChartReport extends Component {
   constructor(props) {
     super(props);
-    console.log(props);
     this.state = {
       label: props.label,
       value: props.value,
-      data: [44, 55, 13, 33],
-      categories: ['Apple', 'Mango', 'Orange', 'Watermelon'],
+      data: [],
+      categories: [],
       courseFilters: [],
       chartTypes: [
-        { label: 'ستونی', value: 'bar', id: 0 },
-        { label: 'دایره ای', value: 'pie', id: 1 },
-        { label: 'دونات', value: 'donut', id: 2 }
+        { label: 'ستونی', value: 'bar', id: 'chart_0' },
+        { label: 'دایره ای', value: 'pie', id: 'chart_1' },
+        { label: 'دونات', value: 'donut', id: 'chart_2' }
       ],
       sortTypes: [
-        { label: 'صعودی', value: '', id: 0 },
-        { label: 'نزولی', value: '-', id: 1 }
+        { label: 'صعودی', value: '', id: 'sort_0' },
+        { label: 'نزولی', value: '-', id: 'sort_1' }
       ],
       sortType: '',
-      chartType: ''
+      chartType: '',
+      existedChart: false
     };
+    this.child = React.createRef();
   }
   async componentDidMount() {
     const { value } = this.state;
@@ -52,11 +53,14 @@ class ChartReport extends Component {
     }
   }
   submitFilter = async event => {
-    console.log(123);
     event.preventDefault();
-    const { value, courseFilter, sortType } = this.state;
+    let dataTemp = [];
+    let categoriesTemp = [];
+    const { value, courseFilter, sortType,existedChart } = this.state;
     const resCourseFilterData = await axios.get(
-      `https://khanesarmaye.aparnik.com/api/v1/aparnik/educations/${value}/admin/?ordering=${sortType}${courseFilter}`,
+      `https://khanesarmaye.aparnik.com/api/v1/aparnik/educations/${value}/admin/?ordering=${
+        sortType.value
+      }${courseFilter.key}`,
       {
         headers: {
           Authorization: `Aparnik ${cookies.get('token')}`,
@@ -66,20 +70,39 @@ class ChartReport extends Component {
     );
     try {
       console.log(resCourseFilterData);
-      // this.setState({
-      //   courseFilters: resCourseFilterType.data
-      // });
+      resCourseFilterData.data.results.map(dataInput => {
+        dataTemp.push(dataInput.sort_count);
+        categoriesTemp.push(dataInput.title);
+      });
+      this.setState({
+        data: dataTemp,
+        existedChart: true,
+        categories: categoriesTemp
+      });
+      if (existedChart) {
+        this.child.current.chartRender();
+      }
     } catch (error) {
       toast.error('خطایی رخ داده است دوباره امتحان کنید');
     }
   };
   render() {
-    const { label, courseFilters, value, sortTypes, chartTypes } = this.state;
+    const {
+      label,
+      courseFilters,
+      data,
+      categories,
+      sortTypes,
+      chartTypes,
+      chartType,
+      courseFilter,
+      existedChart
+    } = this.state;
     return (
       <div className={`col-6 mx-auto mt-5`}>
         <fieldset className="zhaak_fieldset clearfix">
           <legend className="zhaak_legend">{label}</legend>
-          <form>
+          <form onSubmit={this.submitFilter.bind(this)}>
             <div className={`form-row form-group text-right`}>
               <div className={`col-12`}>
                 <label>فیلد مورد نظر را انتخاب کنید:</label>
@@ -92,7 +115,7 @@ class ChartReport extends Component {
                   }
                   options={courseFilters}
                   titleKey={'label'}
-                  id="application"
+                  id="filterType"
                 />
               </div>
             </div>
@@ -108,7 +131,7 @@ class ChartReport extends Component {
                   }
                   options={chartTypes}
                   titleKey={'label'}
-                  id="application"
+                  id="chartType"
                 />
               </div>
               <div className={`col-6`}>
@@ -122,16 +145,12 @@ class ChartReport extends Component {
                   }
                   options={sortTypes}
                   titleKey={'label'}
-                  id="application"
+                  id="sortType"
                 />
               </div>
             </div>
             <div className={`${classes.btn_filter_wrapper} clearfix`}>
-              <button
-                type="submit"
-                onSubmit={this.submitFilter.bind(this)}
-                className={`btn btnForm `}
-              >
+              <button type="submit" className={`btn btnForm `}>
                 <Settings
                   className={`${classes.iconSettings}`}
                   style={{
@@ -146,13 +165,28 @@ class ChartReport extends Component {
               </button>
             </div>
           </form>
-          {/* <div className={`${classes.chartCantainer} clearfix`}>
-            <Chart
-              type="pie"
-              data={this.state.data}
-              categories={this.state.categories}
-            />
-          </div> */}
+          <div className={`${classes.chartCantainer} clearfix`}>
+            {data.length > 0 && categories.length > 0 ? (
+              <Chart
+                ref={this.child}
+                type={chartType.value}
+                name={courseFilter.label}
+                data={data}
+                categories={categories}
+                existedChart={existedChart}
+              />
+            ) : (
+              <div className={`${classes.noChartWrapper}`}>
+                <Logo
+                  className={`${classes.logo} mb-1`}
+                  fill="#737381"
+                  width="40px"
+                  viewBox="0 0 500 500"
+                />
+                <p style={{ color: '#737381' }}>موردی برای نمایش وجود ندارد</p>
+              </div>
+            )}
+          </div>
         </fieldset>
       </div>
     );

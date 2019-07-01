@@ -60,12 +60,12 @@ body {
   display: inline-block;
 }
 svg * {
-  text-anchor: end;
+  font-family: 'iran', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
   letter-spacing: 0 !important;
-  font-size: 12px;
+  font-size: 10px;
 }
-.apexcharts-canvas * {
-  text-anchor: middle;
+.apexcharts-canvas {
+  direction: ltr;
 }
 .btnGreen {
   background: #53b257 !important;
@@ -80,7 +80,6 @@ input[type='text'] {
 textarea {
   font-size: 12px !important;
 }
-
 .Toastify__toast-body {
   text-align: right;
   font-family: iran;
@@ -157,7 +156,7 @@ legend.zhaak_legend {
   width: auto;
 }
 .apexcharts-tooltip * {
-  font-family: 'iran', 'yekan', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+  font-family: 'iran', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
 }
 .apexcharts-tooltip-marker {
   margin: 0 0 0 10px;
