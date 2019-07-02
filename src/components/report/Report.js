@@ -1,66 +1,50 @@
 import React, { Component } from 'react';
 import { Consumer } from '../../context';
 import ChartReport from './chartReport/ChartReport';
-import Select from 'react-select';
+import SelectTypeReport from './selectTypeReport/SelectTypeReport';
 
 import Icons from '../../assets/svg/icons.svg';
 import classes from './Report.module.sass';
 
 class Report extends Component {
-  state = {
-    filters: [
-      { value: 'courses', label: 'درس', id: 0 },
-      { value: 'users', label: 'کاربر', id: 1 },
-      { value: 'teachers', label: 'مربی', id: 2 },
-      { value: 'coupons', label: 'کوپن', id: 3 },
-      { value: 'audits', label: 'بازرسی سیستم', id: 4 }
-    ],
-    courseFilters: [],
-    courseFilter: '',
-    selectedOption: []
-  };
+  constructor() {
+    super();
+    this.child = React.createRef();
+  }
 
-  handleChange = selectedOption => {
-    this.setState({ selectedOption });
+  handleSelectTypeReportModal = e => {
+    this.child.current.handleOpenModal();
   };
   render() {
-    const { selectedOption, filters } = this.state;
-
     return (
       <Consumer>
-        {value => (
-          <div className={`${classes.reportContainer}`}>
-            <div className={`row`}>
-              <p className={`${classes.noCardHeader} col-12 text-right`}>
-                گزارش ها
-              </p>
-            </div>
-            <div className={`${classes.createCardTitle} row`}>
-              <div
-                className={`${classes.noCardHeaderWrapper} col-5 text-right`}
-              >
-                <p className={`${classes.noCardTitle} mb-0 mt-3`}>
-                  فیلد گزارش گیری خود را انتخاب کنید:
-                </p>
-              </div>
-              <div className={`col-4 mr-auto`}>
-                <div className={`row no-gutters`}>
-                  <div className={`col-8`}>
-                    <Select
-                      value={selectedOption}
-                      onChange={this.handleChange}
-                      options={filters}
-                      isMulti={true}
-                      rtl={true}
-                      classNamePrefix="aparnik"
-                      className={`aparnik_multiSelect`}
-                      placeholder="نوع فیلتر را انتخاب کنید"
-                    />
+        {value => {
+          const { dispatch, typeReports } = value;
+          return (
+            <React.Fragment>
+              <SelectTypeReport show={true} ref={this.child} />
+              <div className={`${classes.reportContainer}`}>
+                <div className={`row`}>
+                  <p className={`${classes.noCardHeader} col-12 text-right`}>
+                    گزارش ها
+                  </p>
+                </div>
+                <div className={`${classes.createCardTitle} row`}>
+                  <div
+                    className={`${
+                      classes.noCardHeaderWrapper
+                    } col-5 text-right`}
+                  >
+                    <p className={`${classes.reportTitle} mb-0 mt-3`}>
+                      از این قسمت می توانید گزارش های مربوط به سیستم را مشاهده
+                      کنید:
+                    </p>
                   </div>
-                  <div className={`col-4`}>
+                  <div className={`col-4 mr-auto`}>
                     <button
                       type="button"
                       className={`btn btnForm ${classes.sendTicket}`}
+                      onClick={this.handleSelectTypeReportModal}
                     >
                       <svg
                         className={`${classes.iconAdd}`}
@@ -74,14 +58,21 @@ class Report extends Component {
                     </button>
                   </div>
                 </div>
+                <div className={`row`}>
+                  {typeReports
+                    ? typeReports.map(report => (
+                        <ChartReport
+                          label={report.label}
+                          value={report.value}
+                          key={report.id}
+                        />
+                      ))
+                    : ''}
+                </div>
               </div>
-            </div>
-
-            {selectedOption.map(report => (
-              <ChartReport label={report.label} value={report.value} />
-            ))}
-          </div>
-        )}
+            </React.Fragment>
+          );
+        }}
       </Consumer>
     );
   }

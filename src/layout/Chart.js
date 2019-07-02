@@ -22,11 +22,24 @@ class Chart extends Component {
             ],
             xaxis: {
               categories: props.categories
+              /*   labels: {
+                formatter: function(value) {
+                  let res = '';
+                  if (Object.toString(value).length > 25) {
+                    res = value.slice(0, 25) + '***';
+                    console.log(res);
+                    return res;
+                  }   else {
+                    return value;
+                  } 
+                }
+              } */
             }
           }
         };
         break;
-      case 'pie':
+      case 'pie' || 'donut':
+        console.log(props.type);
         this.state = {
           options: {
             chart: {
@@ -50,19 +63,10 @@ class Chart extends Component {
     );
 
     this.chart.render();
-    // this.state.exictedChart = true;
   };
-  // componentWillReceiveProps(nextProps) {
-  //   console.log('componentWillReceiveProps', nextProps);
-  // }
   componentDidMount() {
     this.chartRender(this);
   }
-  // componentWillUpdate(nextProps, nextState) {
-  //   console.log(nextProps, nextState);
-  //   this.intialConfig(nextProps);
-  //   this.chartRender.bind(this);
-  // }
   render() {
     return <div id="chart" />;
   }

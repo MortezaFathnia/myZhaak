@@ -46,6 +46,11 @@ const reducer = (state, action) => {
         ...state,
         mainTicket: action.payload
       };
+    case 'TYPEREPORT':
+      return {
+        ...state,
+        typeReports: action.payload
+      };
     default:
       return state;
   }
@@ -62,6 +67,7 @@ export class Provider extends Component {
     device_model: '',
     homeProperties: {},
     upgradeLevel: false,
+    typeReports: [],
     tab: 'report',
     mainTicket: '',
     step: 'agreement',

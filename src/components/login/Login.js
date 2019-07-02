@@ -3,7 +3,6 @@ import TextInputGroup from '../../layout/TextInputGroup';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import classes from './Login.module.sass';
-import logo from '../../assets/svg/logo.svg';
 import { Consumer } from '../../context';
 import Loading from '../../layout/Loading';
 import LoadingOverlay from 'react-loading-overlay';
