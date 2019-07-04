@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import ApexCharts from 'apexcharts';
+import uuid from 'uuid';
 class Chart extends Component {
   constructor(props) {
     super(props);
     this.intialConfig(props);
+    this.id = uuid();
     this.chart = '';
+    console.log('constructor')
   }
   intialConfig = props => {
     switch (props.type) {
@@ -53,12 +56,13 @@ class Chart extends Component {
     }
   };
   chartRender = () => {
+    console.log('id',this.id);
     this.intialConfig(this.props);
     if (this.chart) {
       this.chart.destroy();
     }
     this.chart = new ApexCharts(
-      document.querySelector('#chart'),
+      document.querySelector('#chart'+this.id),
       this.state.options
     );
 
@@ -68,7 +72,7 @@ class Chart extends Component {
     this.chartRender(this);
   }
   render() {
-    return <div id="chart" />;
+    return <div id={`chart${this.id}`} />;
   }
 }
 export default Chart;

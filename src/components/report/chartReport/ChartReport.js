@@ -20,13 +20,13 @@ class ChartReport extends Component {
       categories: [],
       courseFilters: [],
       chartTypes: [
-        { label: 'ستونی', value: 'bar', id: 'chart_0' },
-        { label: 'دایره ای', value: 'pie', id: 'chart_1' },
+        { label: 'ستونی', value: 'bar'},
+        { label: 'دایره ای', value: 'pie'},
         { label: 'دونات', value: 'donut', id: 'chart_2' }
       ],
       sortTypes: [
-        { label: 'صعودی', value: '', id: 'sort_0' },
-        { label: 'نزولی', value: '-', id: 'sort_1' }
+        { label: 'صعودی', value: ''},
+        { label: 'نزولی', value: '-' }
       ],
       sortType: '',
       chartType: '',
@@ -101,8 +101,9 @@ class ChartReport extends Component {
       existedChart,
       Loading
     } = this.state;
+    const { id } = this.props;
     return (
-      <div className={`col-4 mt-5`}>
+      <div className={`col-4 mt-5`} id={id}>
         <LoadingOverlay
           active={Loading}
           spinner

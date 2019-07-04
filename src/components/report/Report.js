@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Consumer } from '../../context';
 import ChartReport from './chartReport/ChartReport';
 import SelectTypeReport from './selectTypeReport/SelectTypeReport';
+import uuid from 'uuid';
 
 import Icons from '../../assets/svg/icons.svg';
 import classes from './Report.module.sass';
@@ -64,7 +65,7 @@ class Report extends Component {
                         <ChartReport
                           label={report.label}
                           value={report.value}
-                          key={report.id}
+                          id={uuid()}
                         />
                       ))
                     : ''}
