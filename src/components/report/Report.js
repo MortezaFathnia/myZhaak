@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Consumer } from '../../context';
 import ChartReport from './chartReport/ChartReport';
 import SelectTypeReport from './selectTypeReport/SelectTypeReport';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import uuid from 'uuid';
 
 import Icons from '../../assets/svg/icons.svg';
@@ -59,17 +60,42 @@ class Report extends Component {
                     </button>
                   </div>
                 </div>
-                <div className={`row`}>
-                  {typeReports
-                    ? typeReports.map(report => (
-                        <ChartReport
-                          label={report.label}
-                          value={report.value}
-                          id={uuid()}
-                        />
-                      ))
-                    : ''}
-                </div>
+                <DragDropContext onDragEnd={this.onDragEnd}>
+                  <div className={`row`}>
+                    <Droppable droppableId="droppable">
+                      {(provided, snapshot) => (
+                        <div
+                          {...provided.droppableProps}
+                          ref={provided.innerRef}
+                        >
+                          {typeReports
+                            ? typeReports.map((report, index) => (
+                                <Draggable
+                                  key={uuid()}
+                                  draggableId={uuid()}
+                                  index={index}
+                                >
+                                  {(provided, snapshot) => (
+                                    <div
+                                      ref={provided.innerRef}
+                                      {...provided.draggableProps}
+                                      {...provided.dragHandleProps}
+                                    >
+                                      <ChartReport
+                                        label={report.label}
+                                        value={report.value}
+                                        id={uuid()}
+                                      />
+                                    </div>
+                                  )}
+                                </Draggable>
+                              ))
+                            : ''}
+                        </div>
+                      )}
+                    </Droppable>
+                  </div>
+                </DragDropContext>
               </div>
             </React.Fragment>
           );
