@@ -19,6 +19,7 @@
     "react-countdown-now": "^2.1.0",
     "react-datepicker2": "^3.0.0-alpha.5",
     "react-dom": "^16.8.6",
+    "react-drag-and-drop": "^3.0.0",
     "react-loading-overlay": "^1.0.1",
     "react-modal": "^3.8.1",
     "react-router-dom": "^5.0.0",

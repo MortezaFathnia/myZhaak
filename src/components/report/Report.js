@@ -1,22 +1,72 @@
-import React, { Component } from 'react';
-import { Consumer } from '../../context';
-import ChartReport from './chartReport/ChartReport';
-import SelectTypeReport from './selectTypeReport/SelectTypeReport';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import uuid from 'uuid';
+import React, { Component } from "react";
+import { Consumer } from "../../context";
+import ReactDOM from "react-dom";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import ChartReport from "./chartReport/ChartReport";
+import SelectTypeReport from "./selectTypeReport/SelectTypeReport";
+import Testdragdrop from "./Testdragdrop";
+import uuid from "uuid";
 
-import Icons from '../../assets/svg/icons.svg';
-import classes from './Report.module.sass';
+import Icons from "../../assets/svg/icons.svg";
+import classes from "./Report.module.sass";
+
+// a little function to help us with reordering the result
+const reorder = (list, startIndex, endIndex) => {
+  const result = Array.from(list);
+  const [removed] = result.splice(startIndex, 1);
+  result.splice(endIndex, 0, removed);
+
+  return result;
+};
+
+const grid = 8;
+
+const getItemStyle = (isDragging, draggableStyle) => ({
+  // some basic styles to make the items look a bit nicer
+  userSelect: "none",
+  // padding: grid * 2,
+  padding: 0,
+  margin: `0 ${grid}px 0 0`,
+
+  // change background colour if dragging
+  background: isDragging ? "grey" : "lightgrey",
+
+  // styles we need to apply on draggables
+  ...draggableStyle
+});
+
+const getListStyle = isDraggingOver => ({
+  background: isDraggingOver ? "gray" : "lightgrey",
+  display: "flex",
+  padding: grid,
+  overflow: "auto"
+});
 
 class Report extends Component {
   constructor() {
     super();
     this.child = React.createRef();
+    this.onDragEnd = this.onDragEnd.bind(this);
+    this.state = { reports: [] };
   }
 
   handleSelectTypeReportModal = e => {
     this.child.current.handleOpenModal();
   };
+
+  onDragEnd = (dispatch, typeReports, result, event) => {
+    // dropped outside the list
+    if (!result.destination) {
+      return;
+    }
+    const items = reorder(
+      typeReports,
+      result.source.index,
+      result.destination.index
+    );
+    dispatch({ type: "TYPEREPORT", payload: items }, () => {});
+  };
+
   render() {
     return (
       <Consumer>
@@ -60,42 +110,52 @@ class Report extends Component {
                     </button>
                   </div>
                 </div>
-                <DragDropContext onDragEnd={this.onDragEnd}>
-                  <div className={`row`}>
+                {/* <Testdragdrop /> */}
+                {typeReports ? (
+                  <DragDropContext
+                    onDragEnd={this.onDragEnd.bind(this, dispatch, typeReports)}
+                  >
                     <Droppable droppableId="droppable">
                       {(provided, snapshot) => (
                         <div
                           {...provided.droppableProps}
                           ref={provided.innerRef}
+                          style={getListStyle(snapshot.isDraggingOver)}
                         >
-                          {typeReports
-                            ? typeReports.map((report, index) => (
-                                <Draggable
-                                  key={uuid()}
-                                  draggableId={uuid()}
-                                  index={index}
-                                >
-                                  {(provided, snapshot) => (
-                                    <div
-                                      ref={provided.innerRef}
-                                      {...provided.draggableProps}
-                                      {...provided.dragHandleProps}
-                                    >
-                                      <ChartReport
-                                        label={report.label}
-                                        value={report.value}
-                                        id={uuid()}
-                                      />
-                                    </div>
+                          {typeReports.map((report, index) => (
+                            <Draggable
+                              key={report.id}
+                              draggableId={report.id}
+                              index={index}
+                            >
+                              {(provided, snapshot) => (
+                                <div
+                                  ref={provided.innerRef}
+                                  {...provided.draggableProps}
+                                  {...provided.dragHandleProps}
+                                  style={getItemStyle(
+                                    snapshot.isDragging,
+                                    provided.draggableProps.style
                                   )}
-                                </Draggable>
-                              ))
-                            : ''}
+                                  className={`col-4 mt-5`}
+                                >
+                                  <ChartReport
+                                    label={report.label}
+                                    value={report.value}
+                                    id={uuid()}
+                                  />
+                                </div>
+                              )}
+                            </Draggable>
+                          ))}
+                          {provided.placeholder}
                         </div>
                       )}
                     </Droppable>
-                  </div>
-                </DragDropContext>
+                  </DragDropContext>
+                ) : (
+                  ""
+                )}
               </div>
             </React.Fragment>
           );

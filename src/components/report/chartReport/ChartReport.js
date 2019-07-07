@@ -1,14 +1,14 @@
-import React, { Component } from 'react';
-import axios from 'axios';
-import { toast } from 'react-toastify';
-import LoadingOverlay from 'react-loading-overlay';
-import Cookies from 'universal-cookie';
-import Chart from '../../../layout/Chart';
-import SelectOption from '../../../layout/SelectOption';
-import Settings from '../../../assets/svg/settings';
-import Logo from '../../../assets/svg/logo';
+import React, { Component } from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
+import LoadingOverlay from "react-loading-overlay";
+import Cookies from "universal-cookie";
+import Chart from "../../../layout/Chart";
+import SelectOption from "../../../layout/SelectOption";
+import Settings from "../../../assets/svg/settings";
+import Logo from "../../../assets/svg/logo";
 
-import classes from './ChartReport.module.sass';
+import classes from "./ChartReport.module.sass";
 const cookies = new Cookies();
 class ChartReport extends Component {
   constructor(props) {
@@ -20,16 +20,16 @@ class ChartReport extends Component {
       categories: [],
       courseFilters: [],
       chartTypes: [
-        { label: 'ستونی', value: 'bar'},
-        { label: 'دایره ای', value: 'pie'},
-        { label: 'دونات', value: 'donut', id: 'chart_2' }
+        { label: "ستونی", value: "bar" },
+        { label: "دایره ای", value: "pie" },
+        { label: "دونات", value: "donut", id: "chart_2" }
       ],
       sortTypes: [
-        { label: 'صعودی', value: ''},
-        { label: 'نزولی', value: '-' }
+        { label: "صعودی", value: "" },
+        { label: "نزولی", value: "-" }
       ],
-      sortType: '',
-      chartType: '',
+      sortType: "",
+      chartType: "",
       existedChart: false,
       Loading: true
     };
@@ -41,8 +41,8 @@ class ChartReport extends Component {
       `https://khanesarmaye.aparnik.com/api/v1/aparnik/educations/${value}/admin/sort/`,
       {
         headers: {
-          Authorization: `Aparnik ${cookies.get('token')}`,
-          'Content-Type': 'application/json'
+          Authorization: `Aparnik ${cookies.get("token")}`,
+          "Content-Type": "application/json"
         }
       }
     );
@@ -52,7 +52,7 @@ class ChartReport extends Component {
         Loading: false
       });
     } catch (error) {
-      toast.error('خطایی رخ داده است دوباره امتحان کنید');
+      toast.error("خطایی رخ داده است دوباره امتحان کنید");
     }
   }
   submitFilter = async event => {
@@ -66,8 +66,8 @@ class ChartReport extends Component {
       }${courseFilter.key}`,
       {
         headers: {
-          Authorization: `Aparnik ${cookies.get('token')}`,
-          'Content-Type': 'application/json'
+          Authorization: `Aparnik ${cookies.get("token")}`,
+          "Content-Type": "application/json"
         }
       }
     );
@@ -85,7 +85,7 @@ class ChartReport extends Component {
         this.child.current.chartRender();
       }
     } catch (error) {
-      toast.error('خطایی رخ داده است دوباره امتحان کنید');
+      toast.error("خطایی رخ داده است دوباره امتحان کنید");
     }
   };
   render() {
@@ -103,7 +103,7 @@ class ChartReport extends Component {
     } = this.state;
     const { id } = this.props;
     return (
-      <div className={`col-4 mt-5`} id={id}>
+      <div id={id}>
         <LoadingOverlay
           active={Loading}
           spinner
@@ -124,7 +124,7 @@ class ChartReport extends Component {
                       })
                     }
                     options={courseFilters}
-                    titleKey={'label'}
+                    titleKey={"label"}
                     id="filterType"
                   />
                 </div>
@@ -140,7 +140,7 @@ class ChartReport extends Component {
                       })
                     }
                     options={chartTypes}
-                    titleKey={'label'}
+                    titleKey={"label"}
                     id="chartType"
                   />
                 </div>
@@ -154,7 +154,7 @@ class ChartReport extends Component {
                       })
                     }
                     options={sortTypes}
-                    titleKey={'label'}
+                    titleKey={"label"}
                     id="sortType"
                   />
                 </div>
@@ -164,9 +164,9 @@ class ChartReport extends Component {
                   <Settings
                     className={`${classes.iconSettings}`}
                     style={{
-                      width: '12px',
-                      height: '12px',
-                      marginLeft: '4px'
+                      width: "12px",
+                      height: "12px",
+                      marginLeft: "4px"
                     }}
                     fill="#fff"
                     viewBox="0 0 478.703 478.703"
@@ -193,7 +193,7 @@ class ChartReport extends Component {
                     width="40px"
                     viewBox="0 0 500 500"
                   />
-                  <p style={{ color: '#737381' }}>
+                  <p style={{ color: "#737381" }}>
                     موردی برای نمایش وجود ندارد
                   </p>
                 </div>
