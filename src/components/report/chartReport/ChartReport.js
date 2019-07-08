@@ -28,6 +28,20 @@ class ChartReport extends Component {
         { label: "صعودی", value: "" },
         { label: "نزولی", value: "-" }
       ],
+      dataLabels: {
+        courses: "title",
+        teachers: "user",
+        coupons: "",
+        audits: "",
+        users: ""
+      },
+      keyDataLabels: {
+        courses: "",
+        teachers: "last_name",
+        coupons: "",
+        audits: "",
+        users: ""
+      },
       sortType: "",
       chartType: "",
       existedChart: false,
@@ -60,7 +74,14 @@ class ChartReport extends Component {
     event.preventDefault();
     let dataTemp = [];
     let categoriesTemp = [];
-    const { value, courseFilter, sortType, existedChart } = this.state;
+    const {
+      value,
+      courseFilter,
+      sortType,
+      existedChart,
+      dataLabels,
+      keyDataLabels
+    } = this.state;
     if (!value) {
       this.setState({ errors: { mobile: "فیلد نوع نمودار اجباری است" } });
       return;
@@ -86,10 +107,14 @@ class ChartReport extends Component {
         }
       }
     );
+
     try {
       resCourseFilterData.data.results.map(dataInput => {
         dataTemp.push(dataInput.sort_count);
-        categoriesTemp.push(dataInput.title);
+        let item = keyDataLabels[value]
+          ? dataInput[`${dataLabels[value]}`][`${keyDataLabels[value]}`]
+          : dataInput[`${dataLabels[value]}`];
+        categoriesTemp.push(item);
       });
       this.setState({
         data: dataTemp,

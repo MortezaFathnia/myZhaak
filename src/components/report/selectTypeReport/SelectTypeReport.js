@@ -14,6 +14,8 @@ class SelectTypeReport extends Component {
         { value: "users", label: "کاربر" },
         { value: "teachers", label: "مربی" },
         { value: "coupons", label: "کوپن" },
+        { value: "orders", label: "سفارشات" },
+        { value: "products", label: "محصولات" },
         { value: "audits", label: "بازرسی سیستم" }
       ],
       courseFilters: [],

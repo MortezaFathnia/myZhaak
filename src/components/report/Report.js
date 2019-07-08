@@ -3,7 +3,6 @@ import { Consumer } from "../../context";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import ChartReport from "./chartReport/ChartReport";
 import SelectTypeReport from "./selectTypeReport/SelectTypeReport";
-import TestDragDrop from "./TestDragDrop";
 import Icons from "../../assets/svg/icons.svg";
 import classes from "./Report.module.sass";
 

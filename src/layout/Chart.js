@@ -1,17 +1,16 @@
-import React, { Component } from 'react';
-import ApexCharts from 'apexcharts';
-import uuid from 'uuid';
+import React, { Component } from "react";
+import ApexCharts from "apexcharts";
+import uuid from "uuid";
 class Chart extends Component {
   constructor(props) {
     super(props);
     this.intialConfig(props);
     this.id = uuid();
-    this.chart = '';
-    console.log('constructor')
+    this.chart = "";
   }
   intialConfig = props => {
     switch (props.type) {
-      case 'bar':
+      case "bar":
         this.state = {
           options: {
             chart: {
@@ -41,8 +40,7 @@ class Chart extends Component {
           }
         };
         break;
-      case 'pie' || 'donut':
-        console.log(props.type);
+      case "pie" || "donut":
         this.state = {
           options: {
             chart: {
@@ -56,13 +54,12 @@ class Chart extends Component {
     }
   };
   chartRender = () => {
-    console.log('id',this.id);
     this.intialConfig(this.props);
     if (this.chart) {
       this.chart.destroy();
     }
     this.chart = new ApexCharts(
-      document.querySelector('#chart'+this.id),
+      document.querySelector("#chart" + this.id),
       this.state.options
     );
 
