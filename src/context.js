@@ -47,6 +47,7 @@ const reducer = (state, action) => {
         mainTicket: action.payload
       };
     case "TYPEREPORT":
+      console.log(action.payload);
       return {
         ...state,
         typeReports: action.payload

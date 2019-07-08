@@ -1,10 +1,8 @@
 import React, { Component } from "react";
 import { Consumer } from "../../context";
-import ReactDOM from "react-dom";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import ChartReport from "./chartReport/ChartReport";
 import SelectTypeReport from "./selectTypeReport/SelectTypeReport";
-import Testdragdrop from "./Testdragdrop";
 import uuid from "uuid";
 
 import Icons from "../../assets/svg/icons.svg";
@@ -25,20 +23,20 @@ const getItemStyle = (isDragging, draggableStyle) => ({
   // some basic styles to make the items look a bit nicer
   userSelect: "none",
   // padding: grid * 2,
-  padding: 0,
-  margin: `0 ${grid}px 0 0`,
+  // margin: `0 ${grid}px 0 0`,
 
   // change background colour if dragging
-  background: isDragging ? "grey" : "lightgrey",
-
+  // background: isDragging ? "black" : "green",
+  // background: isDragging ? "black" : "green",
   // styles we need to apply on draggables
   ...draggableStyle
 });
 
 const getListStyle = isDraggingOver => ({
-  background: isDraggingOver ? "gray" : "lightgrey",
+  // background: isDraggingOver ? "red" : "blue",
+  background: isDraggingOver ? "rgba(0,0,0,.2)" : "",
   display: "flex",
-  padding: grid,
+  // padding: grid,
   overflow: "auto"
 });
 
@@ -110,7 +108,6 @@ class Report extends Component {
                     </button>
                   </div>
                 </div>
-                {/* <Testdragdrop /> */}
                 {typeReports ? (
                   <DragDropContext
                     onDragEnd={this.onDragEnd.bind(this, dispatch, typeReports)}
@@ -121,6 +118,7 @@ class Report extends Component {
                           {...provided.droppableProps}
                           ref={provided.innerRef}
                           style={getListStyle(snapshot.isDraggingOver)}
+                          className={`row`}
                         >
                           {typeReports.map((report, index) => (
                             <Draggable
@@ -137,12 +135,13 @@ class Report extends Component {
                                     snapshot.isDragging,
                                     provided.draggableProps.style
                                   )}
-                                  className={`col-4 mt-5`}
+                                  className={`col-4 mt-3`}
                                 >
                                   <ChartReport
                                     label={report.label}
                                     value={report.value}
-                                    id={uuid()}
+                                    key={report.id}
+                                    id={report.id}
                                   />
                                 </div>
                               )}

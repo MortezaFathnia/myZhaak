@@ -22,7 +22,7 @@ class ChartReport extends Component {
       chartTypes: [
         { label: "ستونی", value: "bar" },
         { label: "دایره ای", value: "pie" },
-        { label: "دونات", value: "donut", id: "chart_2" }
+        { label: "دونات", value: "donut"}
       ],
       sortTypes: [
         { label: "صعودی", value: "" },

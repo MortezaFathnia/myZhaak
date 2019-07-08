@@ -10,11 +10,11 @@ class SelectTypeReport extends Component {
     super(props);
     this.state = {
       filters: [
-        { value: "courses", label: "درس", key: 0 },
-        { value: "users", label: "کاربر", key: 1 },
-        { value: "teachers", label: "مربی", key: 2 },
-        { value: "coupons", label: "کوپن", key: 3 },
-        { value: "audits", label: "بازرسی سیستم", key: 4 }
+        { value: "courses", label: "درس" },
+        { value: "users", label: "کاربر" },
+        { value: "teachers", label: "مربی" },
+        { value: "coupons", label: "کوپن" },
+        { value: "audits", label: "بازرسی سیستم" }
       ],
       courseFilters: [],
       courseFilter: "",
@@ -32,10 +32,11 @@ class SelectTypeReport extends Component {
 
   handleSubmit = (dispatch, typeReports, e) => {
     const { selectedOption } = this.state;
-    selectedOption.id = uuid();
-    typeReports.push(selectedOption);
+    let randId = uuid();
+    selectedOption.id = randId;
+    typeReports.push(JSON.parse(JSON.stringify(selectedOption)));
     dispatch({ type: "TYPEREPORT", payload: typeReports });
-    this.setState({ isPopoverOpen: false, selectedOption: "" });
+    this.setState({ isPopoverOpen: false, selectedOption: {} });
   };
   render() {
     const { isPopoverOpen, selectedOption, filters } = this.state;

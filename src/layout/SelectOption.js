@@ -16,7 +16,7 @@ const SelectOptionGroup = ({ label, options, id, onChange, titleKey }) => {
         ? options.map(option => {
             return (
               <option
-                key={option.id ? option.id : uuid()}
+                key={option.id}
                 onChange={onChange}
                 value={JSON.stringify(option)}
               >
