@@ -3,8 +3,7 @@ import { Consumer } from "../../context";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import ChartReport from "./chartReport/ChartReport";
 import SelectTypeReport from "./selectTypeReport/SelectTypeReport";
-import uuid from "uuid";
-
+import TestDragDrop from "./TestDragDrop";
 import Icons from "../../assets/svg/icons.svg";
 import classes from "./Report.module.sass";
 
@@ -62,7 +61,7 @@ class Report extends Component {
       result.source.index,
       result.destination.index
     );
-    dispatch({ type: "TYPEREPORT", payload: items }, () => {});
+    dispatch({ type: "TYPEREPORT", payload: items });
   };
 
   render() {
@@ -97,10 +96,10 @@ class Report extends Component {
                       onClick={this.handleSelectTypeReportModal}
                     >
                       <svg
-                        className={`${classes.iconAdd}`}
-                        width="12px"
+                        className={`iconAdd`}
+                        width="10px"
                         fill="#fff"
-                        height="12px"
+                        height="10px"
                       >
                         <use xlinkHref={`${Icons}#icon-ticketAdd`} />
                       </svg>
@@ -108,53 +107,61 @@ class Report extends Component {
                     </button>
                   </div>
                 </div>
-                {typeReports ? (
-                  <DragDropContext
-                    onDragEnd={this.onDragEnd.bind(this, dispatch, typeReports)}
-                  >
-                    <Droppable droppableId="droppable">
-                      {(provided, snapshot) => (
-                        <div
-                          {...provided.droppableProps}
-                          ref={provided.innerRef}
-                          style={getListStyle(snapshot.isDraggingOver)}
-                          className={`row`}
-                        >
-                          {typeReports.map((report, index) => (
-                            <Draggable
-                              key={report.id}
-                              draggableId={report.id}
-                              index={index}
-                            >
-                              {(provided, snapshot) => (
-                                <div
-                                  ref={provided.innerRef}
-                                  {...provided.draggableProps}
-                                  {...provided.dragHandleProps}
-                                  style={getItemStyle(
-                                    snapshot.isDragging,
-                                    provided.draggableProps.style
-                                  )}
-                                  className={`col-4 mt-3`}
-                                >
-                                  <ChartReport
-                                    label={report.label}
-                                    value={report.value}
-                                    key={report.id}
-                                    id={report.id}
-                                  />
-                                </div>
-                              )}
-                            </Draggable>
-                          ))}
-                          {provided.placeholder}
-                        </div>
+
+                <div style={{ direction: "ltr" }}>
+                  {/* <TestDragDrop /> */}
+                  {typeReports ? (
+                    <DragDropContext
+                      onDragEnd={this.onDragEnd.bind(
+                        this,
+                        dispatch,
+                        typeReports
                       )}
-                    </Droppable>
-                  </DragDropContext>
-                ) : (
-                  ""
-                )}
+                    >
+                      <Droppable droppableId="droppable" direction="horizontal">
+                        {(provided, snapshot) => (
+                          <div
+                            {...provided.droppableProps}
+                            ref={provided.innerRef}
+                            style={getListStyle(snapshot.isDraggingOver)}
+                            className={`row`}
+                          >
+                            {typeReports.map((report, index) => (
+                              <Draggable
+                                key={report.id}
+                                draggableId={report.id}
+                                index={index}
+                              >
+                                {(provided, snapshot) => (
+                                  <div
+                                    ref={provided.innerRef}
+                                    {...provided.draggableProps}
+                                    {...provided.dragHandleProps}
+                                    style={getItemStyle(
+                                      snapshot.isDragging,
+                                      provided.draggableProps.style
+                                    )}
+                                    className={`col-4 mt-3`}
+                                  >
+                                    <ChartReport
+                                      label={report.label}
+                                      value={report.value}
+                                      key={report.id}
+                                      id={report.id}
+                                    />
+                                  </div>
+                                )}
+                              </Draggable>
+                            ))}
+                            {provided.placeholder}
+                          </div>
+                        )}
+                      </Droppable>
+                    </DragDropContext>
+                  ) : (
+                    ""
+                  )}
+                </div>
               </div>
             </React.Fragment>
           );

@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import Icons from '../../../assets/svg/icons.svg';
-import AddCard from '../addCard/AddCrad';
+import React, { Component } from "react";
+import Icons from "../../../assets/svg/icons.svg";
+import AddCard from "../addCard/AddCrad";
 
-import classes from './NoCard.module.sass';
+import classes from "./NoCard.module.sass";
 class NoCard extends Component {
   constructor() {
     super();
@@ -30,10 +30,10 @@ class NoCard extends Component {
                 className={`btn btnForm ${classes.sendTicket}`}
               >
                 <svg
-                  className={`${classes.iconAdd}`}
-                  width="12px"
+                  className={`iconAdd`}
+                  width="10px"
                   fill="#fff"
-                  height="12px"
+                  height="10px"
                 >
                   <use xlinkHref={`${Icons}#icon-ticketAdd`} />
                 </svg>

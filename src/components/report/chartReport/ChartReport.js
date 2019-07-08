@@ -22,7 +22,7 @@ class ChartReport extends Component {
       chartTypes: [
         { label: "ستونی", value: "bar" },
         { label: "دایره ای", value: "pie" },
-        { label: "دونات", value: "donut"}
+        { label: "دونات", value: "donut" }
       ],
       sortTypes: [
         { label: "صعودی", value: "" },
@@ -31,7 +31,8 @@ class ChartReport extends Component {
       sortType: "",
       chartType: "",
       existedChart: false,
-      Loading: true
+      Loading: true,
+      errors: {}
     };
     this.child = React.createRef();
   }
@@ -60,6 +61,20 @@ class ChartReport extends Component {
     let dataTemp = [];
     let categoriesTemp = [];
     const { value, courseFilter, sortType, existedChart } = this.state;
+    if (!value) {
+      this.setState({ errors: { mobile: "فیلد نوع نمودار اجباری است" } });
+      return;
+    }
+    if (!sortType) {
+      this.setState({ errors: { mobile: "فیلد مرتب سازی اجباری است" } });
+      return;
+    }
+
+    if (!courseFilter) {
+      this.setState({ errors: { mobile: "فیلد نوع فیلتر اجباری است" } });
+      return;
+    }
+
     const resCourseFilterData = await axios.get(
       `https://khanesarmaye.aparnik.com/api/v1/aparnik/educations/${value}/admin/?ordering=${
         sortType.value
@@ -103,7 +118,7 @@ class ChartReport extends Component {
     } = this.state;
     const { id } = this.props;
     return (
-      <div id={id}>
+      <div id={id} style={{ direction: "rtl" }}>
         <LoadingOverlay
           active={Loading}
           spinner

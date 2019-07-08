@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import Icons from '../../../assets/svg/icons.svg';
+import React, { Component } from "react";
+import Icons from "../../../assets/svg/icons.svg";
 
-import classes from './NoApplication.module.sass';
+import classes from "./NoApplication.module.sass";
 class NoApplication extends Component {
   render() {
     return (
@@ -20,12 +20,7 @@ class NoApplication extends Component {
               type="button"
               className={`btn btnForm ${classes.sendTicket}`}
             >
-              <svg
-                className={`${classes.iconAdd}`}
-                width="12px"
-                fill="#fff"
-                height="12px"
-              >
+              <svg className={`iconAdd`} width="10px" fill="#fff" height="10px">
                 <use xlinkHref={`${Icons}#icon-ticketAdd`} />
               </svg>
               ایجاد اپلیکیشن
