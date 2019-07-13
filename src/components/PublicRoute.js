@@ -11,7 +11,7 @@ import Cookies from "universal-cookie";
 
 const cookies = new Cookies();
 
-const PrivateRoute = ({ component: Component, ...rest }) => {
+const PublicRoute = ({ component: Component, restricted, ...rest }) => {
   return (
     <Consumer>
       {value => {
@@ -20,10 +20,10 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
           <Route
             {...rest}
             render={props =>
-              cookies.get("token") || isAuthenticated ? (
-                <Component {...props} />
+              isAuthenticated && restricted ? (
+                <Redirect to="/dashboard" />
               ) : (
-                <Redirect to="/" />
+                <Component {...props} />
               )
             }
           />
@@ -33,4 +33,4 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
   );
 };
 
-export default PrivateRoute;
+export default PublicRoute;

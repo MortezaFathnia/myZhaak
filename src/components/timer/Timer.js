@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import axios from 'axios';
-import { toast } from 'react-toastify';
-import { Consumer } from '../../context';
+import React, { Component } from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { Consumer } from "../../context";
 
 class Timer extends Component {
   constructor() {
@@ -16,20 +16,20 @@ class Timer extends Component {
     e.preventDefault();
 
     let data = new FormData();
-    data.set('username', number);
-    data.set('version_number', '1.3');
-    data.set('device_id', '1.3');
-    data.set('device_id', 'asdasdfasdfasdf');
-    data.set('os_version', '10.4');
-    data.set('device_model', 'iphone 6plus');
-    data.set('device_type', 'a');
+    data.set("username", number);
+    data.set("version_number", "1.3");
+    data.set("device_id", "1.3");
+    data.set("device_id", "asdasdfasdfasdf");
+    data.set("os_version", "10.4");
+    data.set("device_model", "iphone 6plus");
+    data.set("device_type", "a");
     try {
       axios
-        .post(Apis['login'], data)
+        .post(Apis["login"], data)
         .then(res => {})
         .catch(error => {});
     } catch (error) {
-      toast.error('خطایی رخ داده است دوبازه امتحان کنید');
+      toast.error("خطایی رخ داده است دوبازه امتحان کنید");
     }
     this.startTimer();
   };
@@ -43,9 +43,9 @@ class Timer extends Component {
     let seconds = Math.ceil(divisor_for_seconds);
     seconds = seconds.toString().length === 2 ? `${seconds}` : `0${seconds}`;
     let obj = {
-      h: hours + '',
-      m: minutes + '',
-      s: seconds + ''
+      h: hours + "",
+      m: minutes + "",
+      s: seconds + ""
     };
     return obj;
   }
@@ -84,10 +84,10 @@ class Timer extends Component {
       <Consumer>
         {value => {
           const { dispatch, number, apiUrl } = value;
-          return this.state.time.s === '00' && this.state.time.s === '00' ? (
+          return this.state.time.s === "00" && this.state.time.s === "00" ? (
             <p
               className="float-left"
-              style={{ color: '#6bb5ef', cursor: 'pointer' }}
+              style={{ color: "#6bb5ef", cursor: "pointer" }}
               onClick={this.onSubmit.bind(this, dispatch, number, apiUrl)}
             >
               ارسال مجدد

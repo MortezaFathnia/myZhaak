@@ -51,6 +51,11 @@ const reducer = (state, action) => {
         ...state,
         typeReports: action.payload
       };
+    case "ADMINAPIS": {
+      return {
+        adminUrl: action.payload
+      };
+    }
     default:
       return state;
   }
@@ -59,6 +64,7 @@ export class Provider extends Component {
   state = {
     aboutus: {},
     apiUrl: {},
+    adminUrl: {},
     user: {},
     isAuthenticated: false,
     device_id: "",
@@ -73,6 +79,7 @@ export class Provider extends Component {
     step: "agreement",
     dispatch: action => this.setState(state => reducer(state, action))
   };
+
   verifyToken = async () => {
     const { device_id, os_version, device_model, apiUrl } = this.state;
     let data = new FormData();
@@ -87,16 +94,73 @@ export class Provider extends Component {
       .then(resApi => {
         this.setState({ user: resApi.data.user });
         this.setState({ isAuthenticated: true });
+        this.goToDashboard();
       })
       .catch(function(error) {
         console.log("error Occured. ");
       });
   };
+
+  getPermissionFirebase = () => {
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyCO0POv68FmCPNhexLnSpGg0wDx40zZqA0",
+      authDomain: "zhaak-4ad4e.firebaseapp.com",
+      databaseURL: "https://zhaak-4ad4e.firebaseio.com",
+      projectId: "zhaak-4ad4e",
+      storageBucket: "zhaak-4ad4e.appspot.com",
+      messagingSenderId: "242627529388",
+      appId: "1:242627529388:web:ce695ee1d62716ea"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const messaging = firebase.messaging();
+
+    messaging
+      .requestPermission()
+      .then(function() {
+        console.log("Have Permission!");
+        return messaging.getToken();
+      })
+      .then(function(token) {
+        cookies.set("fcmtoken", token, { path: "/" });
+        let data = new FormData();
+        data.set("device_id", guid());
+        data.set("device_model", "iphone 6plus");
+        data.set("device_type", "w");
+        data.set("fcm_token", token);
+        axios
+          .post(
+            "https://api.zhaak.com/api/v1/aparnik/users/notification-add-token/",
+            data
+          )
+          .then(res => {
+            ready.fcmToken = true;
+            console.log(res);
+            //todo: why this.setState is not defined?
+            this.setState({ loadingOverlay: false });
+          });
+      })
+      .catch(function(error) {
+        console.log("error Occured. ");
+      });
+  };
+  goToDashboard = () => {};
   async componentDidMount() {
+    if (cookies.get("token")) {
+      this.verifyToken();
+    }
+    let token = cookies.get("token") ? `Aparnik ${cookies.get("token")}` : "";
     await axios
-      .get("https://api.zhaak.com/api/v1/home")
+      .get("https://api.zhaak.com/api/v1/home", {
+        headers: {
+          Authorization: token,
+          "Content-Type": "application/json"
+        }
+      })
       .then(resApi => {
         this.setState({ apiUrl: resApi.data.url });
+        this.setState({ adminUrl: resApi.data["url_admin"] });
         this.setState({ device_id: guid() });
         this.setState({ os_version: window.navigator.appVersion });
         this.setState({ device_model: window.navigator.platform });
@@ -111,47 +175,7 @@ export class Provider extends Component {
           this.verifyToken();
         }
         if (!cookies.get("fcmtoken")) {
-          // Your web app's Firebase configuration
-          var firebaseConfig = {
-            apiKey: "AIzaSyCO0POv68FmCPNhexLnSpGg0wDx40zZqA0",
-            authDomain: "zhaak-4ad4e.firebaseapp.com",
-            databaseURL: "https://zhaak-4ad4e.firebaseio.com",
-            projectId: "zhaak-4ad4e",
-            storageBucket: "zhaak-4ad4e.appspot.com",
-            messagingSenderId: "242627529388",
-            appId: "1:242627529388:web:ce695ee1d62716ea"
-          };
-          // Initialize Firebase
-          firebase.initializeApp(firebaseConfig);
-          const messaging = firebase.messaging();
-
-          messaging
-            .requestPermission()
-            .then(function() {
-              console.log("Have Permission!");
-              return messaging.getToken();
-            })
-            .then(function(token) {
-              cookies.set("fcmtoken", token, { path: "/" });
-              let data = new FormData();
-              data.set("device_id", guid());
-              data.set("device_model", "iphone 6plus");
-              data.set("device_type", "w");
-              data.set("fcm_token", token);
-              axios
-                .post(
-                  "https://api.zhaak.com/api/v1/aparnik/users/notification-add-token/",
-                  data
-                )
-                .then(res => {
-                  ready.fcmToken = true;
-                  console.log(res);
-                  this.setState({ loadingOverlay: false });
-                });
-            })
-            .catch(function(error) {
-              console.log("error Occured. ");
-            });
+          this.getPermissionFirebase();
         } else {
           this.setState({ loadingOverlay: false });
         }

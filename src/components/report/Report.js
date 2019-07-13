@@ -67,7 +67,7 @@ class Report extends Component {
     return (
       <Consumer>
         {value => {
-          const { dispatch, typeReports } = value;
+          const { dispatch, typeReports, adminUrl } = value;
           return (
             <React.Fragment>
               <SelectTypeReport show={true} ref={this.child} />
@@ -108,7 +108,6 @@ class Report extends Component {
                 </div>
 
                 <div style={{ direction: "ltr" }}>
-                  {/* <TestDragDrop /> */}
                   {typeReports ? (
                     <DragDropContext
                       onDragEnd={this.onDragEnd.bind(
@@ -143,6 +142,7 @@ class Report extends Component {
                                     className={`col-4 mt-3`}
                                   >
                                     <ChartReport
+                                      url={adminUrl}
                                       label={report.label}
                                       value={report.value}
                                       key={report.id}
