@@ -19,6 +19,7 @@ class NoApplication extends Component {
             <button
               type="button"
               className={`btn btnForm ${classes.sendTicket}`}
+              onClick={() => this.props.changeComponent("addApplication")}
             >
               <svg className={`iconAdd`} width="10px" fill="#fff" height="10px">
                 <use xlinkHref={`${Icons}#icon-ticketAdd`} />

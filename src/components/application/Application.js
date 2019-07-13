@@ -1,23 +1,39 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-import NoApplication from './noApplication/NoApplication';
-import AddApplication from './addApplication/AddApplication';
+import NoApplication from "./noApplication/NoApplication";
+import AddApplication from "./addApplication/AddApplication";
 
-import classes from './Application.module.sass';
+import classes from "./Application.module.sass";
 
 class Application extends Component {
-  changeComponent = compnent => {
-    switch (compnent) {
-      case 'noApplication':
-        return <NoApplication />;
-      case 'addApplication':
+  state = { component: "noApplication" };
+  changeComponent = component => {
+    switch (component) {
+      case "noApplication":
+        return (
+          <NoApplication changeComponent={this.changeComponent.bind(this)} />
+        );
+      case "addApplication":
         return <AddApplication />;
+      default:
+        return (
+          <NoApplication changeComponent={this.changeComponent.bind(this)} />
+        );
     }
   };
   render() {
+    const { component } = this.state;
     return (
       <div className={`${classes.applicationWrapper}`}>
-        {this.changeComponent('noApplication')}
+        {component === "noApplication" ? (
+          <NoApplication
+            changeComponent={component => {
+              this.setState({ component: component });
+            }}
+          />
+        ) : (
+          <AddApplication />
+        )}
       </div>
     );
   }

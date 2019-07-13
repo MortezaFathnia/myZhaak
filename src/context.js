@@ -74,7 +74,7 @@ export class Provider extends Component {
     homeProperties: {},
     upgradeLevel: false,
     typeReports: [],
-    tab: "report",
+    tab: "main",
     mainTicket: "",
     step: "agreement",
     dispatch: action => this.setState(state => reducer(state, action))
