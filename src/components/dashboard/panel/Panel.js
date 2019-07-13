@@ -1,17 +1,17 @@
-import React, { Component } from 'react';
-import Menu from '../../../assets/svg/menu';
-import Reports from '../../../assets/svg/reports';
-import Home from '../../../assets/svg/home';
-import Upgrade from '../../../assets/svg/Upgrade';
-import Ticket from '../../../assets/svg/ticket';
-import Card from '../../../assets/svg/card';
-import Guid from '../../../assets/svg/guid';
-import Application from '../../../assets/svg/application';
-import User from '../../../assets/svg/userPanel';
-import ModalAccess from '../../../layout/ModalAccess';
-import { Consumer } from '../../../context';
+import React, { Component } from "react";
+import Menu from "../../../assets/svg/menu";
+import Reports from "../../../assets/svg/reports";
+import Home from "../../../assets/svg/home";
+import Upgrade from "../../../assets/svg/Upgrade";
+import Ticket from "../../../assets/svg/ticket";
+import Card from "../../../assets/svg/card";
+import Guid from "../../../assets/svg/guid";
+import Application from "../../../assets/svg/application";
+import User from "../../../assets/svg/userPanel";
+import ModalAccess from "../../../layout/ModalAccess";
+import { Consumer } from "../../../context";
 
-import classes from './Panel.module.sass';
+import classes from "./Panel.module.sass";
 
 class Panel extends Component {
   constructor() {
@@ -23,16 +23,16 @@ class Panel extends Component {
     this.child = React.createRef();
   }
   changeActiveTab = event => {
-    var elems = document.querySelectorAll('.tabList li');
+    var elems = document.querySelectorAll(".tabList li");
 
     [].forEach.call(elems, function(el) {
-      el.classList.remove('activeTab');
+      el.classList.remove("activeTab");
     });
-    if (event.target && event.target.tagName.toLowerCase() !== 'button') {
-      if (event.target.closest('li').classList.contains('activeTab') > 0) {
-        event.target.closest('li').classList.remove('activeTab');
+    if (event.target && event.target.tagName.toLowerCase() !== "button") {
+      if (event.target.closest("li").classList.contains("activeTab") > 0) {
+        event.target.closest("li").classList.remove("activeTab");
       } else {
-        event.target.closest('li').classList.add('activeTab');
+        event.target.closest("li").classList.add("activeTab");
       }
     }
   };
@@ -50,7 +50,7 @@ class Panel extends Component {
     //     this.child.current.handleOpenModal();
     //   }
     // } else {
-    dispatch({ type: 'TAB', payload: tab });
+    dispatch({ type: "TAB", payload: tab });
     this.changeActiveTab(event);
     // }
   };
@@ -89,9 +89,9 @@ class Panel extends Component {
                     >
                       <Menu
                         style={{
-                          width: '30px',
-                          height: '30px',
-                          marginLeft: '5px'
+                          width: "30px",
+                          height: "30px",
+                          marginLeft: "5px"
                         }}
                         viewBox="0 0 32 32"
                       />
@@ -102,9 +102,9 @@ class Panel extends Component {
                     <div className={`${classes.userInfo}`}>
                       <User
                         style={{
-                          width: '60px',
-                          height: '60px',
-                          marginLeft: '10px'
+                          width: "60px",
+                          height: "60px",
+                          marginLeft: "10px"
                         }}
                         viewBox="0 0 53 53"
                       />
@@ -116,14 +116,14 @@ class Panel extends Component {
                             this,
                             dispatch,
                             upgradeLevel,
-                            'upgrade'
+                            "upgrade"
                           )}
                           className={`${classes.updateBtn} btn`}
                         >
                           ارتقا به سطح نقره ای
                         </button>
                       ) : (
-                        ''
+                        ""
                       )}
                     </div>
                     <ul className={`${classes.userMenuList} tabList`}>
@@ -133,13 +133,13 @@ class Panel extends Component {
                           this,
                           dispatch,
                           upgradeLevel,
-                          'main'
+                          "main"
                         )}
                       >
                         <Home viewBox="0 0 58.365 58.365" />
                         <a>پیشخوان</a>
                       </li>
-                      <li
+                      {/* <li
                         onClick={this.handleTab.bind(
                           this,
                           dispatch,
@@ -182,13 +182,13 @@ class Panel extends Component {
                       >
                         <Guid viewBox="0 0 21 21" />
                         <a>راهنمایی</a>
-                      </li>
+                      </li> */}
                       <li
                         onClick={this.handleTab.bind(
                           this,
                           dispatch,
                           upgradeLevel,
-                          'report'
+                          "report"
                         )}
                       >
                         <Reports viewBox="0 0 21 21" />
@@ -212,9 +212,9 @@ class Panel extends Component {
                     >
                       <Menu
                         style={{
-                          width: '30px',
-                          height: '30px',
-                          marginLeft: '5px'
+                          width: "30px",
+                          height: "30px",
+                          marginLeft: "5px"
                         }}
                         viewBox="0 0 32 32"
                       />
@@ -235,9 +235,9 @@ class Panel extends Component {
                     >
                       <Menu
                         style={{
-                          width: '30px',
-                          height: '30px',
-                          marginLeft: '5px'
+                          width: "30px",
+                          height: "30px",
+                          marginLeft: "5px"
                         }}
                         viewBox="0 0 32 32"
                       />
@@ -246,7 +246,7 @@ class Panel extends Component {
                   <div
                     className={
                       !mobileCollapsed
-                        ? 'd-none'
+                        ? "d-none"
                         : `${classes.userMenu} ${classes.userMenuMobile}`
                     }
                   >
@@ -257,13 +257,13 @@ class Panel extends Component {
                             this,
                             dispatch,
                             upgradeLevel,
-                            'upgrade'
+                            "upgrade"
                           )}
                         >
                           <Upgrade fill="#bdcadb" viewBox="0 0 16.555 16.555" />
                         </li>
                       ) : (
-                        ''
+                        ""
                       )}
                       <li
                         className={`activeTab`}
@@ -271,12 +271,12 @@ class Panel extends Component {
                           this,
                           dispatch,
                           upgradeLevel,
-                          'main'
+                          "main"
                         )}
                       >
                         <Home viewBox="0 0 58.365 58.365" />
                       </li>
-                      <li
+                      {/* <li
                         onClick={this.handleTab.bind(
                           this,
                           dispatch,
@@ -315,13 +315,13 @@ class Panel extends Component {
                         )}
                       >
                         <Guid viewBox="0 0 21 21" />
-                      </li>
+                      </li> */}
                       <li
                         onClick={this.handleTab.bind(
                           this,
                           dispatch,
                           upgradeLevel,
-                          'reports'
+                          "reports"
                         )}
                       >
                         <Reports viewBox="0 0 21 21" />
