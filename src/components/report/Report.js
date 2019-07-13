@@ -3,6 +3,7 @@ import { Consumer } from "../../context";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import ChartReport from "./chartReport/ChartReport";
 import SelectTypeReport from "./selectTypeReport/SelectTypeReport";
+import AddButton from "../../layout/AddButton";
 import Icons from "../../assets/svg/icons.svg";
 import classes from "./Report.module.sass";
 
@@ -89,21 +90,10 @@ class Report extends Component {
                     </p>
                   </div>
                   <div className={`col-4 mr-auto`}>
-                    <button
-                      type="button"
-                      className={`btn btnForm ${classes.sendTicket}`}
+                    <AddButton
+                      label="افزودن نمودار"
                       onClick={this.handleSelectTypeReportModal}
-                    >
-                      <svg
-                        className={`iconAdd`}
-                        width="10px"
-                        fill="#fff"
-                        height="10px"
-                      >
-                        <use xlinkHref={`${Icons}#icon-ticketAdd`} />
-                      </svg>
-                      افزودن نمودار
-                    </button>
+                    />
                   </div>
                 </div>
 

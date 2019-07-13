@@ -136,14 +136,12 @@ export class Provider extends Component {
           )
           .then(res => {
             ready.fcmToken = true;
-            console.log(res);
-            //todo: why this.setState is not defined?
-            this.setState({ loadingOverlay: false });
           });
       })
       .catch(function(error) {
         console.log("error Occured. ");
       });
+    this.setState({ loadingOverlay: false });
   };
   goToDashboard = () => {};
   async componentDidMount() {

@@ -51,6 +51,12 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
 * {
   outline: none;
 }
@@ -179,6 +185,11 @@ legend.zhaak_legend {
 }
 .react-tiny-popover-container {
   z-index: 850;
+}
+@media (min-width: 992px) {
+  .JDatePicker {
+    width: 220px !important;
+  }
 }
 @media (max-width: 768px) {
   body {

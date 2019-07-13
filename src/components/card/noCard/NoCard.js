@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Icons from "../../../assets/svg/icons.svg";
+import AddButton from "../../../layout/AddButton";
 import AddCard from "../addCard/AddCrad";
 
 import classes from "./NoCard.module.sass";
@@ -23,22 +24,11 @@ class NoCard extends Component {
                 تمامی کارت های شما در این صفحه نمایش داده می شود
               </p>
             </div>
-            <div className={`col-2 mr-auto`}>
-              <button
-                type="button"
+            <div className={`col-2 mr-auto mt-3`}>
+              <AddButton
+                label="افزودن کارت"
                 onClick={this.handleAddCardModal.bind(this)}
-                className={`btn btnForm ${classes.sendTicket}`}
-              >
-                <svg
-                  className={`iconAdd`}
-                  width="10px"
-                  fill="#fff"
-                  height="10px"
-                >
-                  <use xlinkHref={`${Icons}#icon-ticketAdd`} />
-                </svg>
-                افزودن کارت
-              </button>
+              />
             </div>
           </div>
           <div className={`${classes.contextCenter}`}>
