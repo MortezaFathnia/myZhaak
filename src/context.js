@@ -66,6 +66,7 @@ export class Provider extends Component {
   state = {
     aboutus: {},
     apiUrl: {},
+    domain: "",
     adminUrl: {},
     user: {},
     isAuthenticated: false,
@@ -146,12 +147,22 @@ export class Provider extends Component {
     this.setState({ loadingOverlay: false });
   };
   async componentDidMount() {
+    let url = "";
     if (cookies.get("token")) {
       this.verifyToken();
     }
     let token = cookies.get("token") ? `Aparnik ${cookies.get("token")}` : "";
+    let domainRegex = /^(http[s]?:\/\/)(?=.{1,255}$)((.{1,63}\.){1,127}(?![0-9]*$)[a-z0-9-]+\.?)(:[0-9])*/;
+    if (window.location.href.match(domainRegex)) {
+      url = `${window.location.href.match(domainRegex)["0"]}/api/v1/home`;
+      this.setState({ domain: url });
+    } else {
+      url = "https://api.zhaak.com/api/v1/home";
+      this.setState({ domain: "https://api.zhaak.com/api/v1/home" });
+    }
+
     await axios
-      .get("https://api.zhaak.com/api/v1/home", {
+      .get(url, {
         headers: {
           Authorization: token,
           "Content-Type": "application/json"
