@@ -92,6 +92,7 @@ class Report extends Component {
                   <div className={`col-4 mr-auto`}>
                     <AddButton
                       label="افزودن نمودار"
+                      type="button"
                       onClick={this.handleSelectTypeReportModal}
                     />
                   </div>

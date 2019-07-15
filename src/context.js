@@ -21,6 +21,7 @@ const Context = React.createContext();
 const reducer = (state, action) => {
   switch (action.type) {
     case "LOGIN":
+      console.log(action.payload);
       return {
         ...state,
         number: action.payload
@@ -53,6 +54,7 @@ const reducer = (state, action) => {
       };
     case "ADMINAPIS": {
       return {
+        ...state,
         adminUrl: action.payload
       };
     }
@@ -76,6 +78,7 @@ export class Provider extends Component {
     typeReports: [],
     tab: "main",
     mainTicket: "",
+    number: "",
     step: "agreement",
     dispatch: action => this.setState(state => reducer(state, action))
   };
@@ -94,7 +97,6 @@ export class Provider extends Component {
       .then(resApi => {
         this.setState({ user: resApi.data.user });
         this.setState({ isAuthenticated: true });
-        this.goToDashboard();
       })
       .catch(function(error) {
         console.log("error Occured. ");
@@ -143,7 +145,6 @@ export class Provider extends Component {
       });
     this.setState({ loadingOverlay: false });
   };
-  goToDashboard = () => {};
   async componentDidMount() {
     if (cookies.get("token")) {
       this.verifyToken();

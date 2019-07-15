@@ -17,7 +17,7 @@ class Login extends Component {
 
   onChange = e => this.setState({ [e.target.name]: e.target.value });
 
-  getAdminUrl = async (dispatch,token) => {
+  getAdminUrl = async (dispatch, token) => {
     await axios
       .get("https://api.zhaak.com/api/v1/home", {
         headers: {
@@ -26,7 +26,7 @@ class Login extends Component {
         }
       })
       .then(resApi => {
-        dispatch({ type: "ADMINAPIS", payload: resApi.data['url_admin'] });
+        dispatch({ type: "ADMINAPIS", payload: resApi.data["url_admin"] });
       })
       .catch(error => {
         toast.error("خطایی رخ داده است دوبازه امتحان کنید");
@@ -115,7 +115,7 @@ class Login extends Component {
             if (res.data.user["is_new_registered"]) {
               this.props.history.push("/signup");
             } else {
-              this.getAdminUrl(dispatch,res.data.token);
+              this.getAdminUrl(dispatch, res.data.token);
               this.props.history.push("/dashboard");
             }
             cookies.set("token", res.data.token, { path: "/" });
@@ -158,7 +158,7 @@ class Login extends Component {
             >
               <div>
                 {!number ? (
-                  <div className={`${classes.loginContainer} ohGod`}>
+                  <div className={`${classes.loginContainer}`}>
                     <div className={classes.rightBg} />
                     <form
                       className={classes.loginForm}

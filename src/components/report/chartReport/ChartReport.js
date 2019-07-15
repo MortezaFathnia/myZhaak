@@ -46,10 +46,11 @@ class ChartReport extends Component {
         audits: "",
         users: ""
       },
-      sortType: "",
+      sortType: { value: "-" },
       chartType: "",
       existedChart: false,
       Loading: true,
+      LoadingChartData: false,
       errors: {}
     };
     this.child = React.createRef();
@@ -87,16 +88,16 @@ class ChartReport extends Component {
       this.setState({ errors: { value: "فیلد نوع نمودار اجباری است" } });
       return;
     }
-    if (!sortType) {
-      this.setState({ errors: { sortType: "فیلد مرتب سازی اجباری است" } });
-      return;
-    }
+    // if (!sortType) {
+    //   this.setState({ errors: { sortType: "فیلد مرتب سازی اجباری است" } });
+    //   return;
+    // }
 
     if (!courseFilter) {
       this.setState({ errors: { courseFilter: "فیلد نوع فیلتر اجباری است" } });
       return;
     }
-    console.log(value);
+    this.setState({ LoadingChartData: true });
     const resCourseFilterData = await axios.get(
       `${adminUrl[`${value}-list`]}?ordering=${sortType.value}${
         courseFilter.key
@@ -110,6 +111,11 @@ class ChartReport extends Component {
     );
 
     try {
+      this.setState({ LoadingChartData: false });
+      if (resCourseFilterData.data.results.length === 0) {
+        toast.error("داده ای برای نمایش وجود ندارد");
+        return;
+      }
       resCourseFilterData.data.results.map(dataInput => {
         dataTemp.push(dataInput.sort_count);
         let item = keyDataLabels[value]
@@ -140,6 +146,7 @@ class ChartReport extends Component {
       chartType,
       courseFilter,
       existedChart,
+      LoadingChartData,
       Loading
     } = this.state;
     const { id } = this.props;
@@ -175,7 +182,7 @@ class ChartReport extends Component {
                       </div>
                     </div>
                     <div className={`form-row form-group text-right`}>
-                      <div className={`col-6`}>
+                      <div className={`col-12`}>
                         <label>نوع نمودار:</label>
                         <SelectOption
                           label="یک مورد را انتخاب کنید"
@@ -189,7 +196,7 @@ class ChartReport extends Component {
                           id="chartType"
                         />
                       </div>
-                      <div className={`col-6`}>
+                      {/* <div className={`col-6`}>
                         <label>مرتب سازی:</label>
                         <SelectOption
                           label="یک مورد را انتخاب کنید"
@@ -202,7 +209,7 @@ class ChartReport extends Component {
                           titleKey={"label"}
                           id="sortType"
                         />
-                      </div>
+                      </div> */}
                     </div>
                     <div className={`${classes.btn_filter_wrapper} clearfix`}>
                       <button type="submit" className={`btn btnForm `}>
@@ -231,17 +238,23 @@ class ChartReport extends Component {
                         existedChart={existedChart}
                       />
                     ) : (
-                      <div className={`${classes.noChartWrapper}`}>
-                        <Logo
-                          className={`${classes.logo} mb-1`}
-                          fill="#737381"
-                          width="40px"
-                          viewBox="0 0 500 500"
-                        />
-                        <p style={{ color: "#737381" }}>
-                          موردی برای نمایش وجود ندارد
-                        </p>
-                      </div>
+                      <LoadingOverlay
+                        active={LoadingChartData}
+                        spinner
+                        text="در حال دریافت اطلاعات ..."
+                      >
+                        <div className={`${classes.noChartWrapper}`}>
+                          <Logo
+                            className={`${classes.logo} mb-1`}
+                            fill="#737381"
+                            width="40px"
+                            viewBox="0 0 500 500"
+                          />
+                          <p style={{ color: "#737381" }}>
+                            موردی برای نمایش وجود ندارد
+                          </p>
+                        </div>
+                      </LoadingOverlay>
                     )}
                   </div>
                 </fieldset>

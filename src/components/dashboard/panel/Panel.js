@@ -9,10 +9,12 @@ import Guid from "../../../assets/svg/guid";
 import Application from "../../../assets/svg/application";
 import User from "../../../assets/svg/userPanel";
 import ModalAccess from "../../../layout/ModalAccess";
+import Cookies from "universal-cookie";
 import { Consumer } from "../../../context";
 
 import classes from "./Panel.module.sass";
 
+const cookies = new Cookies();
 class Panel extends Component {
   constructor() {
     super();
@@ -68,7 +70,7 @@ class Panel extends Component {
     return (
       <Consumer>
         {value => {
-          const { dispatch, homeProperties, upgradeLevel } = value;
+          const { dispatch, number, upgradeLevel, user } = value;
           return (
             <React.Fragment>
               <ModalAccess show={true} ref={this.child} />
@@ -108,9 +110,17 @@ class Panel extends Component {
                         }}
                         viewBox="0 0 53 53"
                       />
-                      <p className={`${classes.username} mb-2`}>ریحانه احمدی</p>
-                      <p className={`${classes.phone} mb-2`}>09383477545</p>
-                      {!upgradeLevel ? (
+                      {user["first_name"] && user["last_name"] ? (
+                        <p className={`${classes.username} mb-2`}>{`${
+                          user["first_name"]
+                        } ${user["last_name"]}`}</p>
+                      ) : (
+                        <p>کاربر میهمان</p>
+                      )}
+                      <p className={`${classes.phone} mb-2`}>
+                        {cookies.get("mobile")}
+                      </p>
+                      {/* {!upgradeLevel ? (
                         <button
                           onClick={this.handleTab.bind(
                             this,
@@ -124,7 +134,7 @@ class Panel extends Component {
                         </button>
                       ) : (
                         ""
-                      )}
+                      )} */}
                     </div>
                     <ul className={`${classes.userMenuList} tabList`}>
                       <li
@@ -251,7 +261,7 @@ class Panel extends Component {
                     }
                   >
                     <ul className={`${classes.userMenuList} tabList`}>
-                      {!upgradeLevel ? (
+                      {/* {!upgradeLevel ? (
                         <li
                           onClick={this.handleTab.bind(
                             this,
@@ -264,7 +274,7 @@ class Panel extends Component {
                         </li>
                       ) : (
                         ""
-                      )}
+                      )} */}
                       <li
                         className={`activeTab`}
                         onClick={this.handleTab.bind(
