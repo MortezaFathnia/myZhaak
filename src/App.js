@@ -9,6 +9,9 @@ import NotFound from "./components/pages/NotFound";
 import Dashboard from "./components/dashboard/Dashboard";
 import PrivateRoute from "../src/components/PrivateRoute";
 import PublicRoute from "../src/components/PublicRoute";
+import $ from "jquery";
+import Popper from "popper.js";
+import "bootstrap/dist/js/bootstrap.bundle.min";
 
 import "rc-color-picker/assets/index.css";
 import "react-toastify/dist/ReactToastify.css";

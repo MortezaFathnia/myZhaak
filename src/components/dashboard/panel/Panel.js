@@ -70,7 +70,7 @@ class Panel extends Component {
     return (
       <Consumer>
         {value => {
-          const { dispatch, number, upgradeLevel, user } = value;
+          const { dispatch, upgradeLevel, user } = value;
           return (
             <React.Fragment>
               <ModalAccess show={true} ref={this.child} />
@@ -102,14 +102,19 @@ class Panel extends Component {
                   </div>
                   <div className={`${classes.userMenu}`}>
                     <div className={`${classes.userInfo}`}>
-                      <User
-                        style={{
-                          width: "60px",
-                          height: "60px",
-                          marginLeft: "10px"
-                        }}
-                        viewBox="0 0 53 53"
-                      />
+                      {user && user["avatar"] ? (
+                        <img src={user["avatar"]["file_url"]} />
+                      ) : (
+                        <User
+                          style={{
+                            width: "60px",
+                            height: "60px",
+                            marginLeft: "10px"
+                          }}
+                          viewBox="0 0 53 53"
+                        />
+                      )}
+
                       {user["first_name"] && user["last_name"] ? (
                         <p className={`${classes.username} mb-2`}>{`${
                           user["first_name"]

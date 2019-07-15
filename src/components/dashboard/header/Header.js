@@ -1,9 +1,12 @@
-import React, { Component } from 'react';
-import logo from '../../../assets/svg/logo.svg';
-import Notification from '../../../assets/svg/notification';
-import User from '../../../assets/svg/user';
-import Logo from '../../../assets/svg/logo';
-import classes from './Header.module.sass';
+import React, { Component } from "react";
+import logo from "../../../assets/svg/logo.svg";
+import Notification from "../../../assets/svg/notification";
+import User from "../../../assets/svg/user";
+import Logo from "../../../assets/svg/logo";
+import classes from "./Header.module.sass";
+import Select from "react-select";
+import { Consumer } from "../../../context";
+
 class Header extends Component {
   // handleSidebar = () => {
   //   this.props.panelHandler();
@@ -11,52 +14,87 @@ class Header extends Component {
 
   render() {
     return (
-      <div
-        className={
-          !this.props.collapsed
-            ? `${classes.navContainer}`
-            : `${classes.navUncollapsedContainer}`
-        }
-      >
-        <nav className={`nav`}>
-          <div className={`${classes.logoWrapper} m-0 col-xl-8 col-lg-7 col-6`}>
-            <Logo
-              className={`${classes.logo}`}
-              fill="#6bb5ef"
-              width="40px"
-              viewBox="0 0 500 500"
-            />
-          </div>
-          <div className={`col-xl-4 col-lg-5 col-6 float-left no-gutters`}>
-            <div className={`row ${classes.navLeft}`}>
-              <div className={`col-lg-8 d-none d-md-block`}>
-                <a href="tel:0513847591" className={`${classes.phone}`}>
-                  <span dir="ltr" className={`float-left`}>
-                    0513-
-                  </span>
-                  پشتیبانی: 847591
-                </a>
-              </div>
-              <div
-                className={`col-lg-4 justify-content-end ${
-                  classes.notifiWrapper
-                }`}
-              >
-                <button className={`btn ${classes.notificationbtn}`}>
-                  <Notification
-                    viewBox="0 0 512 512"
-                    width="15px"
-                    fill="#737381"
+      <Consumer>
+        {value => {
+          const { user } = value;
+          return (
+            <div
+              className={
+                !this.props.collapsed
+                  ? `${classes.navContainer}`
+                  : `${classes.navUncollapsedContainer}`
+              }
+            >
+              <nav className={`nav`}>
+                <div
+                  className={`${
+                    classes.logoWrapper
+                  } m-0 col-xl-8 col-lg-7 col-6`}
+                >
+                  <Logo
+                    className={`${classes.logo}`}
+                    fill="#6bb5ef"
+                    width="40px"
+                    viewBox="0 0 500 500"
                   />
-                </button>
-                <button className={`btn ${classes.userBtn}`}>
-                  <User viewBox="0 0 32 32" width="28px" fill="#737381" />
-                </button>
-              </div>
+                </div>
+                <div
+                  className={`col-xl-4 col-lg-5 col-6 float-left no-gutters`}
+                >
+                  <div className={`row ${classes.navLeft}`}>
+                    <div className={`col-lg-8 d-none d-md-block`}>
+                      <a href="tel:0513847591" className={`${classes.phone}`}>
+                        <span dir="ltr" className={`float-left`}>
+                          0513-
+                        </span>
+                        پشتیبانی: 847591
+                      </a>
+                    </div>
+                    <div
+                      className={`col-lg-4 justify-content-end ${
+                        classes.notifiWrapper
+                      }`}
+                    >
+                      <button className={`btn ${classes.notificationbtn}`}>
+                        <Notification
+                          viewBox="0 0 512 512"
+                          width="15px"
+                          fill="#737381"
+                        />
+                      </button>
+                      <button
+                        className={`btn ${classes.userBtn}`}
+                        id="navbarDropdown"
+                        role="button"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                      >
+                        <User viewBox="0 0 32 32" width="28px" fill="#737381" />
+                      </button>
+                      <div
+                        class="dropdown-menu"
+                        aria-labelledby="navbarDropdown"
+                      >
+                        <a class="dropdown-item" href="#">
+                          Action
+                        </a>
+                        <a class="dropdown-item" href="#">
+                          Another action
+                        </a>
+                        <div class="dropdown-divider" />
+                        <a class="dropdown-item" href="#">
+                          Something else here
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </nav>
             </div>
-          </div>
-        </nav>
-      </div>
+          );
+        }}
+      </Consumer>
     );
   }
 }
