@@ -70,6 +70,11 @@ svg * {
   letter-spacing: 0 !important;
   font-size: 10px;
 }
+.dropdown-item:active {
+  color: #fff !important;
+  text-decoration: none;
+  background-color: #6bb5ef;
+}
 .apexcharts-canvas {
   direction: ltr;
 }

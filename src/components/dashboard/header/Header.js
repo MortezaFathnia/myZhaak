@@ -1,22 +1,58 @@
 import React, { Component } from "react";
-import logo from "../../../assets/svg/logo.svg";
 import Notification from "../../../assets/svg/notification";
 import User from "../../../assets/svg/user";
 import Logo from "../../../assets/svg/logo";
+import Logout from "../../../assets/svg/logout";
 import classes from "./Header.module.sass";
-import Select from "react-select";
 import { Consumer } from "../../../context";
+import { toast } from "react-toastify";
+import Cookies from "universal-cookie";
+import axios from "axios";
 
+const cookies = new Cookies();
 class Header extends Component {
-  // handleSidebar = () => {
-  //   this.props.panelHandler();
-  // };
+  state = { loading: false };
+
+  logout = (dispatch, Apis, device_id, device_model, event) => {
+    let data = new FormData();
+    data.set("device_type", "w");
+    data.set("device_id", device_id);
+    data.set("device_model", device_model);
+    try {
+      this.setState({ loading: true });
+      console.log(Apis["logout"]);
+      axios
+        .post(Apis["logout"], data, {
+          headers: {
+            Authorization: `Aparnik ${cookies.get("token")}`,
+            "Content-Type": "application/json"
+          }
+        })
+        .then(res => {
+          console.log(res);
+          this.setState({ loading: false });
+          if (res.status === 200) {
+            cookies.remove("token");
+            cookies.remove("mobile");
+            cookies.remove("fcmtoken");
+            window.location.reload();
+          }
+          dispatch({ type: "LOGOUT", payload: false });
+        })
+        .catch(error => {
+          this.setState({ loading: false });
+          console.log(error);
+        });
+    } catch (error) {
+      toast.error("خطایی رخ داده است دوبازه امتحان کنید");
+    }
+  };
 
   render() {
     return (
       <Consumer>
         {value => {
-          const { user } = value;
+          const { user, dispatch, apiUrl, device_id, device_model } = value;
           return (
             <div
               className={
@@ -73,18 +109,53 @@ class Header extends Component {
                         <User viewBox="0 0 32 32" width="28px" fill="#737381" />
                       </button>
                       <div
-                        class="dropdown-menu"
+                        className={`dropdown-menu ${
+                          classes.profileMenu
+                        } text-right`}
                         aria-labelledby="navbarDropdown"
                       >
-                        <a class="dropdown-item" href="#">
-                          Action
+                        <a className={`dropdown-item ${classes.userInfo}`}>
+                          {user && user["avatar"] ? (
+                            <img src={user["avatar"]["file_url"]} />
+                          ) : (
+                            <User
+                              style={{
+                                width: "25px",
+                                height: "25px",
+                                marginLeft: "5px",
+                                float: "right"
+                              }}
+                              viewBox="0 0 53 53"
+                            />
+                          )}
+
+                          {user["first_name"] && user["last_name"] ? (
+                            <p className={`${classes.username} mb-2`}>{`${
+                              user["first_name"]
+                            } ${user["last_name"]}`}</p>
+                          ) : (
+                            <p>کاربر میهمان</p>
+                          )}
                         </a>
-                        <a class="dropdown-item" href="#">
-                          Another action
-                        </a>
-                        <div class="dropdown-divider" />
-                        <a class="dropdown-item" href="#">
-                          Something else here
+                        <a
+                          className="dropdown-item"
+                          onClick={this.logout.bind(
+                            this,
+                            dispatch,
+                            apiUrl,
+                            device_id,
+                            device_model
+                          )}
+                        >
+                          <Logout
+                            style={{
+                              width: "20px",
+                              height: "20px",
+                              marginLeft: "5px",
+                              float: "right"
+                            }}
+                          />
+                          خروج
                         </a>
                       </div>
                     </div>

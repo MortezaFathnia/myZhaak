@@ -58,6 +58,12 @@ const reducer = (state, action) => {
         adminUrl: action.payload
       };
     }
+    case "LOGOUT": {
+      return {
+        ...state,
+        isAuthenticated: action.payload
+      };
+    }
     default:
       return state;
   }
