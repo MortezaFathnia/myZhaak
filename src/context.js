@@ -2,13 +2,18 @@ import React, { Component } from "react";
 import axios from "axios";
 import firebase from "firebase";
 import Cookies from "universal-cookie";
+import "firebase/auth"; // This line is important
+import { toast } from "react-toastify";
+
+export const googleProvider = new firebase.auth.GoogleAuthProvider();
 
 const cookies = new Cookies();
 const ready = { fcmToken: false, home: false };
 let guid = function() {
-  var nav = window.navigator;
-  var screen = window.screen;
-  var guid = nav.mimeTypes.length;
+  let nav = window.navigator;
+  let screen = window.screen;
+  let guid = nav.mimeTypes.length;
+
   guid += nav.userAgent.replace(/\D+/g, "");
   guid += nav.plugins.length;
   guid += screen.height || "";
@@ -106,8 +111,44 @@ export class Provider extends Component {
         this.setState({ isAuthenticated: true });
       })
       .catch(function(error) {
+        this.logout();
         console.log("error Occured. ");
       });
+  };
+
+  logout = async () => {
+    const { device_id, device_model, apiUrl } = this.state;
+    let data = new FormData();
+    data.set("device_type", "w");
+    data.set("device_id", device_id);
+    data.set("device_model", device_model);
+    try {
+      this.setState({ loading: true });
+      console.log(apiUrl["logout"]);
+      axios
+        .post(apiUrl["logout"], data, {
+          headers: {
+            Authorization: `Aparnik ${cookies.get("token")}`,
+            "Content-Type": "application/json"
+          }
+        })
+        .then(res => {
+          this.setState({ loading: false });
+          if (res.status === 200) {
+            cookies.remove("token");
+            cookies.remove("mobile");
+            cookies.remove("fcmtoken");
+            window.location.reload();
+          }
+          this.setState({ isAuthenticated: false });
+        })
+        .catch(error => {
+          this.setState({ loading: false });
+          console.log(error);
+        });
+    } catch (error) {
+      toast.error("خطایی رخ داده است دوبازه امتحان کنید");
+    }
   };
 
   getPermissionFirebase = () => {
@@ -157,7 +198,10 @@ export class Provider extends Component {
     if (cookies.get("token")) {
       this.verifyToken();
     }
-    let token = cookies.get("token") ? `Aparnik ${cookies.get("token")}` : "";
+    let header = cookies.get("token")
+      ? `{Authorization:Aparnik ${cookies.get("token")},
+    "Content-Type": "application/json"}`
+      : "";
     let domainRegex = /^(http[s]?:\/\/)(?=.{1,255}$)((.{1,63}\.){1,127}(?![0-9]*$)[a-z0-9-]+\.?)(:[0-9])*/;
     if (window.location.href.match(domainRegex)) {
       url = `${window.location.href.match(domainRegex)["0"]}/api/v1/home`;
@@ -169,10 +213,7 @@ export class Provider extends Component {
 
     await axios
       .get(url, {
-        headers: {
-          Authorization: token,
-          "Content-Type": "application/json"
-        }
+        headers: header
       })
       .then(resApi => {
         this.setState({ apiUrl: resApi.data.url });
@@ -187,16 +228,18 @@ export class Provider extends Component {
           this.setState({ upgradeLevel: true });
         }
         ready.home = true;
+        this.setState({ loadingOverlay: false });
         if (cookies.get("token")) {
           this.verifyToken();
         }
-        if (!cookies.get("fcmtoken")) {
-          this.getPermissionFirebase();
-        } else {
-          this.setState({ loadingOverlay: false });
-        }
+        // if (!cookies.get("fcmtoken")) {
+        //   this.getPermissionFirebase();
+        // } else {
+        //   this.setState({ loadingOverlay: false });
+        // }
       })
       .catch(function(error) {
+        console.log(error);
         console.log("error Occured. ");
       });
   }
