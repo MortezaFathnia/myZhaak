@@ -37,7 +37,7 @@ const PlaceholderPreview = ({ type, secondColor }) => {
         </div>
       </div>
       <div className={`${classes.gutterContent}`} />
-      {type == 'horizental' ? (
+      {type === 'horizental' ? (
         <React.Fragment>
           <ul className={`${classes.listPlaceolerItems} clearfix`}>
             <li className={`${classes.placeholderHorizentalItem}`}>

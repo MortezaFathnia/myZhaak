@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import axios from 'axios';
 
 import Icons from '../assets/svg/icons.svg';
 import classes from './UploadBtn.module.css';
@@ -26,9 +24,9 @@ class UploadBtn extends Component {
 
   bytesToSize = bytes => {
     var sizes = ['بایت', 'کیلوبایت', 'مگابایت', 'گیگابایت', 'ترابایت'];
-    if (bytes == 0) return '0 بایت';
+    if (bytes === 0) return '0 بایت';
     var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
-    return ' بایت 104' /* sizes[i] + ' ' + Math.round(bytes / Math.pow(1024, i), 2) */;
+    return sizes[i] + ' ' + Math.round(bytes / Math.pow(1024, i), 2);
   };
   render() {
     const { label, icon, size, id, loading } = this.props;

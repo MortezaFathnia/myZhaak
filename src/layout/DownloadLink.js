@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Icons from '../assets/svg/icons.svg';
 import classes from './DownloadLink.module.css';
 

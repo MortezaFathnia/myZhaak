@@ -1,11 +1,11 @@
-import React, { Component } from "react";
-import { Consumer } from "../../context";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import ChartReport from "./chartReport/ChartReport";
-import SelectTypeReport from "./selectTypeReport/SelectTypeReport";
-import AddButton from "../../layout/AddButton";
-import Icons from "../../assets/svg/icons.svg";
-import classes from "./Report.module.sass";
+import React, { Component } from 'react';
+import { Consumer } from '../../context';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import ChartReport from './chartReport/ChartReport';
+import SelectTypeReport from './selectTypeReport/SelectTypeReport';
+import AddButton from '../../layout/AddButton';
+import { toast } from 'react-toastify';
+import classes from './Report.module.sass';
 
 // a little function to help us with reordering the result
 const reorder = (list, startIndex, endIndex) => {
@@ -20,7 +20,7 @@ const grid = 8;
 
 const getItemStyle = (isDragging, draggableStyle) => ({
   // some basic styles to make the items look a bit nicer
-  userSelect: "none",
+  userSelect: 'none',
   // padding: grid * 2,
   // margin: `0 ${grid}px 0 0`,
 
@@ -33,10 +33,10 @@ const getItemStyle = (isDragging, draggableStyle) => ({
 
 const getListStyle = isDraggingOver => ({
   // background: isDraggingOver ? "red" : "blue",
-  background: isDraggingOver ? "rgba(0,0,0,.2)" : "",
-  display: "flex",
+  background: isDraggingOver ? 'rgba(0,0,0,.2)' : '',
+  display: 'flex',
   // padding: grid,
-  overflow: "auto"
+  overflow: 'auto'
 });
 
 class Report extends Component {
@@ -47,7 +47,12 @@ class Report extends Component {
     this.state = { reports: [] };
   }
 
-  handleSelectTypeReportModal = e => {
+  handleSelectTypeReportModal = (adminUrl, e) => {
+    console.log('adminUrl', adminUrl, adminUrl === {});
+    if (Object.keys(adminUrl).length === 0) {
+      toast.error('شما مجوز دسترسی یه این قسمت را ندارید.');
+      return;
+    }
     this.child.current.handleOpenModal();
   };
 
@@ -61,7 +66,7 @@ class Report extends Component {
       result.source.index,
       result.destination.index
     );
-    dispatch({ type: "TYPEREPORT", payload: items });
+    dispatch({ type: 'TYPEREPORT', payload: items });
   };
 
   render() {
@@ -93,12 +98,15 @@ class Report extends Component {
                     <AddButton
                       label="افزودن نمودار"
                       type="button"
-                      onClick={this.handleSelectTypeReportModal}
+                      onClick={this.handleSelectTypeReportModal.bind(
+                        this,
+                        adminUrl
+                      )}
                     />
                   </div>
                 </div>
 
-                <div style={{ direction: "ltr" }}>
+                <div style={{ direction: 'ltr' }}>
                   {typeReports ? (
                     <DragDropContext
                       onDragEnd={this.onDragEnd.bind(
@@ -149,7 +157,7 @@ class Report extends Component {
                       </Droppable>
                     </DragDropContext>
                   ) : (
-                    ""
+                    ''
                   )}
                 </div>
               </div>

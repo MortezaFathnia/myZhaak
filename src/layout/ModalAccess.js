@@ -10,7 +10,6 @@ class ModalAccess extends Component {
     };
   }
   handleOpenModal = () => {
-    const { isPopoverOpen } = this.state;
     this.setState({ isPopoverOpen: true });
   };
   render() {

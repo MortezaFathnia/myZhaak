@@ -1,25 +1,25 @@
-import React, { Component } from "react";
-import Popover from "react-tiny-popover";
-import Select from "react-select";
-import { Consumer } from "../../../context";
-import Loading from "../../../layout/Loading";
-import uuid from "uuid";
-import classes from "./SelectTypeReport.module.sass";
+import React, { Component } from 'react';
+import Popover from 'react-tiny-popover';
+import Select from 'react-select';
+import { Consumer } from '../../../context';
+import Loading from '../../../layout/Loading';
+import uuid from 'uuid';
+import classes from './SelectTypeReport.module.sass';
 class SelectTypeReport extends Component {
   constructor(props) {
     super(props);
     this.state = {
       filters: [
-        { value: "courses", label: "درس" },
-        { value: "users", label: "کاربر" },
-        { value: "teachers", label: "مربی" },
-        { value: "coupons", label: "کوپن" },
-        { value: "orders", label: "سفارشات" },
-        { value: "products", label: "محصولات" },
-        { value: "audits", label: "بازرسی سیستم" }
+        { value: 'courses', label: 'درس' },
+        { value: 'users', label: 'کاربر' },
+        { value: 'teachers', label: 'مربی' },
+        { value: 'coupons', label: 'کوپن' },
+        { value: 'orders', label: 'سفارشات' },
+        { value: 'products', label: 'محصولات' },
+        { value: 'audits', label: 'بازرسی سیستم' }
       ],
       courseFilters: [],
-      courseFilter: "",
+      courseFilter: '',
       selectedOption: {}
     };
   }
@@ -31,13 +31,13 @@ class SelectTypeReport extends Component {
   handleOpenModal = () => {
     this.setState({ isPopoverOpen: true });
   };
-
   handleSubmit = (dispatch, typeReports, e) => {
+    e.preventDefault();
     const { selectedOption } = this.state;
     let randId = uuid();
     selectedOption.id = randId;
     typeReports.push(JSON.parse(JSON.stringify(selectedOption)));
-    dispatch({ type: "TYPEREPORT", payload: typeReports });
+    dispatch({ type: 'TYPEREPORT', payload: typeReports });
     this.setState({ isPopoverOpen: false, selectedOption: {} });
   };
   render() {
@@ -49,7 +49,7 @@ class SelectTypeReport extends Component {
           return (
             <Popover
               isOpen={isPopoverOpen}
-              position={"center"} // preferred position
+              position={'center'} // preferred position
               content={
                 <div className={`${classes.overlay}`}>
                   <div className={`${classes.modal}`}>

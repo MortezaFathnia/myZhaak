@@ -1,18 +1,18 @@
-import React, { Component } from "react";
-import Header from "./header/Header";
-import Panel from "./panel/Panel";
-import Main from "../main/Main";
-import Card from "../card/Card";
-import Guid from "../guid/Guid";
-import Ticket from "../ticket/Ticket";
-import Report from "../report/Report";
-import Application from "../application/Application";
-import Upgrade from "../upgrade/Upgrade";
-import { Consumer } from "../../context";
+import React, { Component } from 'react';
+import Header from './header/Header';
+import Panel from './panel/Panel';
+import Main from '../main/Main';
+import Card from '../card/Card';
+import Guid from '../guid/Guid';
+import Ticket from '../ticket/Ticket';
+import Report from '../report/Report';
+import Application from '../application/Application';
+import Upgrade from '../upgrade/Upgrade';
+import { Consumer } from '../../context';
 
-import classes from "./Dashboard.module.sass";
+import classes from './Dashboard.module.sass';
 class Dashboard extends Component {
-  state = { collapsed: "", mobileCollapsed: "" };
+  state = { collapsed: '', mobileCollapsed: '' };
   handlePanel = collapsed => {
     this.setState({ collapsed: !collapsed });
   };
@@ -22,19 +22,19 @@ class Dashboard extends Component {
   };
   switchTab = tab => {
     switch (tab) {
-      case "ticket":
+      case 'ticket':
         return <Ticket />;
-      case "card":
+      case 'card':
         return <Card />;
-      case "guid":
+      case 'guid':
         return <Guid />;
-      case "report":
+      case 'report':
         return <Report />;
-      case "application":
+      case 'application':
         return <Application />;
-      case "upgrade":
+      case 'upgrade':
         return <Upgrade />;
-      case "main":
+      case 'main':
         return <Main />;
       default:
         return <Upgrade />;
@@ -47,12 +47,12 @@ class Dashboard extends Component {
         {value => {
           const { tab } = value;
           return (
-            <div>
+            <div className="clearfix">
               <Panel
                 handleClick={this.handlePanel}
                 handleMobileClick={this.handleMobile}
               />
-              <div>
+              <div className="clearfix">
                 <Header
                   collapsed={collapsed}
                   mobileCollapsed={mobileCollapsed}

@@ -1,8 +1,7 @@
-import React from "react";
-import PropTypes from "prop-types";
-import uuid from "uuid";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import classes from "./SelectOption.module.css";
+import classes from './SelectOption.module.css';
 
 const SelectOptionGroup = ({ label, options, id, onChange, titleKey }) => {
   return (
@@ -11,7 +10,7 @@ const SelectOptionGroup = ({ label, options, id, onChange, titleKey }) => {
       onChange={onChange}
       id={id}
     >
-      {label ? <option>{label}</option> : ""}
+      {label ? <option>{label}</option> : ''}
       {options
         ? options.map(option => {
             return (
@@ -24,7 +23,7 @@ const SelectOptionGroup = ({ label, options, id, onChange, titleKey }) => {
               </option>
             );
           })
-        : ""}
+        : ''}
     </select>
   );
 };

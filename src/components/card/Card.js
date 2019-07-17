@@ -12,6 +12,8 @@ class Card extends Component {
         return <NoCard />;
       case 'addCard':
         return <AddCard />;
+      default:
+        return <NoCard />;
     }
   };
   render() {

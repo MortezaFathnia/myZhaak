@@ -7,9 +7,6 @@ import SuccessState from './successState/SuccessState';
 import TabComponent from './tabComponent/TabComponent';
 import Agreement from './agreement/Agreement';
 class Upgrade extends Component {
-  constructor(props) {
-    super(props);
-  }
   state = {
     address: '',
     errors: {},

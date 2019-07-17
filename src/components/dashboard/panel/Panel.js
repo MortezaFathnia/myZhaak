@@ -1,18 +1,13 @@
-import React, { Component } from "react";
-import Menu from "../../../assets/svg/menu";
-import Reports from "../../../assets/svg/reports";
-import Home from "../../../assets/svg/home";
-import Upgrade from "../../../assets/svg/Upgrade";
-import Ticket from "../../../assets/svg/ticket";
-import Card from "../../../assets/svg/card";
-import Guid from "../../../assets/svg/guid";
-import Application from "../../../assets/svg/application";
-import User from "../../../assets/svg/userPanel";
-import ModalAccess from "../../../layout/ModalAccess";
-import Cookies from "universal-cookie";
-import { Consumer } from "../../../context";
+import React, { Component } from 'react';
+import Menu from '../../../assets/svg/menu';
+import Reports from '../../../assets/svg/reports';
+import Home from '../../../assets/svg/home';
+import User from '../../../assets/svg/userPanel';
+import ModalAccess from '../../../layout/ModalAccess';
+import Cookies from 'universal-cookie';
+import { Consumer } from '../../../context';
 
-import classes from "./Panel.module.sass";
+import classes from './Panel.module.sass';
 
 const cookies = new Cookies();
 class Panel extends Component {
@@ -25,16 +20,16 @@ class Panel extends Component {
     this.child = React.createRef();
   }
   changeActiveTab = event => {
-    var elems = document.querySelectorAll(".tabList li");
+    var elems = document.querySelectorAll('.tabList li');
 
     [].forEach.call(elems, function(el) {
-      el.classList.remove("activeTab");
+      el.classList.remove('activeTab');
     });
-    if (event.target && event.target.tagName.toLowerCase() !== "button") {
-      if (event.target.closest("li").classList.contains("activeTab") > 0) {
-        event.target.closest("li").classList.remove("activeTab");
+    if (event.target && event.target.tagName.toLowerCase() !== 'button') {
+      if (event.target.closest('li').classList.contains('activeTab') > 0) {
+        event.target.closest('li').classList.remove('activeTab');
       } else {
-        event.target.closest("li").classList.add("activeTab");
+        event.target.closest('li').classList.add('activeTab');
       }
     }
   };
@@ -44,17 +39,8 @@ class Panel extends Component {
     }
   }
   handleTab = (dispatch, upgradeLevel, tab, event) => {
-    // if (tab === 'ticket' || tab === 'application') {
-    //   if (upgradeLevel) {
-    //     dispatch({ type: 'TAB', payload: tab });
-    //     this.changeActiveTab(event);
-    //   } else {
-    //     this.child.current.handleOpenModal();
-    //   }
-    // } else {
-    dispatch({ type: "TAB", payload: tab });
+    dispatch({ type: 'TAB', payload: tab });
     this.changeActiveTab(event);
-    // }
   };
 
   handlePanel = () => {
@@ -91,9 +77,9 @@ class Panel extends Component {
                     >
                       <Menu
                         style={{
-                          width: "30px",
-                          height: "30px",
-                          marginLeft: "5px"
+                          width: '30px',
+                          height: '30px',
+                          marginLeft: '5px'
                         }}
                         viewBox="0 0 32 32"
                       />
@@ -102,44 +88,29 @@ class Panel extends Component {
                   </div>
                   <div className={`${classes.userMenu}`}>
                     <div className={`${classes.userInfo}`}>
-                      {user && user["avatar"] ? (
-                        <img src={user["avatar"]["file_url"]} />
+                      {user && user['avatar'] ? (
+                        <img src={user['avatar']['file_url']} />
                       ) : (
                         <User
                           style={{
-                            width: "60px",
-                            height: "60px",
-                            marginLeft: "10px"
+                            width: '60px',
+                            height: '60px',
+                            marginLeft: '10px'
                           }}
                           viewBox="0 0 53 53"
                         />
                       )}
 
-                      {user["first_name"] && user["last_name"] ? (
+                      {user['first_name'] && user['last_name'] ? (
                         <p className={`${classes.username} mb-2`}>{`${
-                          user["first_name"]
-                        } ${user["last_name"]}`}</p>
+                          user['first_name']
+                        } ${user['last_name']}`}</p>
                       ) : (
                         <p>کاربر میهمان</p>
                       )}
                       <p className={`${classes.phone} mb-2`}>
-                        {cookies.get("mobile")}
+                        {cookies.get('mobile')}
                       </p>
-                      {/* {!upgradeLevel ? (
-                        <button
-                          onClick={this.handleTab.bind(
-                            this,
-                            dispatch,
-                            upgradeLevel,
-                            "upgrade"
-                          )}
-                          className={`${classes.updateBtn} btn`}
-                        >
-                          ارتقا به سطح نقره ای
-                        </button>
-                      ) : (
-                        ""
-                      )} */}
                     </div>
                     <ul className={`${classes.userMenuList} tabList`}>
                       <li
@@ -148,62 +119,18 @@ class Panel extends Component {
                           this,
                           dispatch,
                           upgradeLevel,
-                          "main"
+                          'main'
                         )}
                       >
                         <Home viewBox="0 0 58.365 58.365" />
                         <a>پیشخوان</a>
                       </li>
-                      {/* <li
-                        onClick={this.handleTab.bind(
-                          this,
-                          dispatch,
-                          upgradeLevel,
-                          'application'
-                        )}
-                      >
-                        <Application viewBox="0 0 21 20" />
-                        <a>اپلیکیشن</a>
-                      </li>
                       <li
                         onClick={this.handleTab.bind(
                           this,
                           dispatch,
                           upgradeLevel,
-                          'card'
-                        )}
-                      >
-                        <Card viewBox="0 0 21 16" />
-                        <a>کارت ها</a>
-                      </li>
-                      <li
-                        onClick={this.handleTab.bind(
-                          this,
-                          dispatch,
-                          upgradeLevel,
-                          'ticket'
-                        )}
-                      >
-                        <Ticket viewBox="0 0 27.036 8.547" />
-                        <a>تیکت ها</a>
-                      </li>
-                      <li
-                        onClick={this.handleTab.bind(
-                          this,
-                          dispatch,
-                          upgradeLevel,
-                          'guid'
-                        )}
-                      >
-                        <Guid viewBox="0 0 21 21" />
-                        <a>راهنمایی</a>
-                      </li> */}
-                      <li
-                        onClick={this.handleTab.bind(
-                          this,
-                          dispatch,
-                          upgradeLevel,
-                          "report"
+                          'report'
                         )}
                       >
                         <Reports viewBox="0 0 21 21" />
@@ -227,9 +154,9 @@ class Panel extends Component {
                     >
                       <Menu
                         style={{
-                          width: "30px",
-                          height: "30px",
-                          marginLeft: "5px"
+                          width: '30px',
+                          height: '30px',
+                          marginLeft: '5px'
                         }}
                         viewBox="0 0 32 32"
                       />
@@ -250,9 +177,9 @@ class Panel extends Component {
                     >
                       <Menu
                         style={{
-                          width: "30px",
-                          height: "30px",
-                          marginLeft: "5px"
+                          width: '30px',
+                          height: '30px',
+                          marginLeft: '5px'
                         }}
                         viewBox="0 0 32 32"
                       />
@@ -261,82 +188,29 @@ class Panel extends Component {
                   <div
                     className={
                       !mobileCollapsed
-                        ? "d-none"
+                        ? 'd-none'
                         : `${classes.userMenu} ${classes.userMenuMobile}`
                     }
                   >
                     <ul className={`${classes.userMenuList} tabList`}>
-                      {/* {!upgradeLevel ? (
-                        <li
-                          onClick={this.handleTab.bind(
-                            this,
-                            dispatch,
-                            upgradeLevel,
-                            "upgrade"
-                          )}
-                        >
-                          <Upgrade fill="#bdcadb" viewBox="0 0 16.555 16.555" />
-                        </li>
-                      ) : (
-                        ""
-                      )} */}
                       <li
                         className={`activeTab`}
                         onClick={this.handleTab.bind(
                           this,
                           dispatch,
                           upgradeLevel,
-                          "main"
+                          'main'
                         )}
                       >
                         <Home viewBox="0 0 58.365 58.365" />
                       </li>
-                      {/* <li
-                        onClick={this.handleTab.bind(
-                          this,
-                          dispatch,
-                          upgradeLevel,
-                          'application'
-                        )}
-                      >
-                        <Application viewBox="0 0 21 20" />
-                      </li>
+
                       <li
                         onClick={this.handleTab.bind(
                           this,
                           dispatch,
                           upgradeLevel,
-                          'card'
-                        )}
-                      >
-                        <Card viewBox="0 0 21 16" />
-                      </li>
-                      <li
-                        onClick={this.handleTab.bind(
-                          this,
-                          dispatch,
-                          upgradeLevel,
-                          'ticket'
-                        )}
-                      >
-                        <Ticket viewBox="0 0 27.036 8.547" />
-                      </li>
-                      <li
-                        onClick={this.handleTab.bind(
-                          this,
-                          dispatch,
-                          upgradeLevel,
-                          'guid'
-                        )}
-                      >
-                        <Guid viewBox="0 0 21 21" />
-                      </li> */}
-                      <li
-                        onClick={this.handleTab.bind(
-                          this,
-                          dispatch,
-                          upgradeLevel,
-                          "reports"
+                          'report'
                         )}
                       >
                         <Reports viewBox="0 0 21 21" />
