@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
-import Menu from '../../../assets/svg/menu';
-import Reports from '../../../assets/svg/reports';
-import Home from '../../../assets/svg/home';
-import User from '../../../assets/svg/userPanel';
-import ModalAccess from '../../../layout/ModalAccess';
-import Cookies from 'universal-cookie';
-import { Consumer } from '../../../context';
+import React, { Component } from "react";
+import Menu from "../../../assets/svg/menu";
+import Reports from "../../../assets/svg/reports";
+import Home from "../../../assets/svg/home";
+import User from "../../../assets/svg/userPanel";
+import ModalAccess from "../../../layout/ModalAccess";
+import Cookies from "universal-cookie";
+import { Consumer } from "../../../context";
 
-import classes from './Panel.module.sass';
+import classes from "./Panel.module.sass";
 
 const cookies = new Cookies();
 class Panel extends Component {
@@ -20,16 +20,16 @@ class Panel extends Component {
     this.child = React.createRef();
   }
   changeActiveTab = event => {
-    var elems = document.querySelectorAll('.tabList li');
+    var elems = document.querySelectorAll(".tabList li");
 
     [].forEach.call(elems, function(el) {
-      el.classList.remove('activeTab');
+      el.classList.remove("activeTab");
     });
-    if (event.target && event.target.tagName.toLowerCase() !== 'button') {
-      if (event.target.closest('li').classList.contains('activeTab') > 0) {
-        event.target.closest('li').classList.remove('activeTab');
+    if (event.target && event.target.tagName.toLowerCase() !== "button") {
+      if (event.target.closest("li").classList.contains("activeTab") > 0) {
+        event.target.closest("li").classList.remove("activeTab");
       } else {
-        event.target.closest('li').classList.add('activeTab');
+        event.target.closest("li").classList.add("activeTab");
       }
     }
   };
@@ -39,7 +39,7 @@ class Panel extends Component {
     }
   }
   handleTab = (dispatch, upgradeLevel, tab, event) => {
-    dispatch({ type: 'TAB', payload: tab });
+    dispatch({ type: "TAB", payload: tab });
     this.changeActiveTab(event);
   };
 
@@ -56,7 +56,7 @@ class Panel extends Component {
     return (
       <Consumer>
         {value => {
-          const { dispatch, upgradeLevel, user } = value;
+          const { dispatch, upgradeLevel, user, tab } = value;
           return (
             <React.Fragment>
               <ModalAccess show={true} ref={this.child} />
@@ -77,9 +77,9 @@ class Panel extends Component {
                     >
                       <Menu
                         style={{
-                          width: '30px',
-                          height: '30px',
-                          marginLeft: '5px'
+                          width: "30px",
+                          height: "30px",
+                          marginLeft: "5px"
                         }}
                         viewBox="0 0 32 32"
                       />
@@ -88,49 +88,50 @@ class Panel extends Component {
                   </div>
                   <div className={`${classes.userMenu}`}>
                     <div className={`${classes.userInfo}`}>
-                      {user && user['avatar'] ? (
-                        <img src={user['avatar']['file_url']} />
+                      {user && user["avatar"] ? (
+                        <img src={user["avatar"]["file_url"]} />
                       ) : (
                         <User
                           style={{
-                            width: '60px',
-                            height: '60px',
-                            marginLeft: '10px'
+                            width: "60px",
+                            height: "60px",
+                            marginLeft: "10px"
                           }}
                           viewBox="0 0 53 53"
                         />
                       )}
 
-                      {user['first_name'] && user['last_name'] ? (
+                      {user["first_name"] && user["last_name"] ? (
                         <p className={`${classes.username} mb-2`}>{`${
-                          user['first_name']
-                        } ${user['last_name']}`}</p>
+                          user["first_name"]
+                        } ${user["last_name"]}`}</p>
                       ) : (
                         <p>کاربر میهمان</p>
                       )}
                       <p className={`${classes.phone} mb-2`}>
-                        {cookies.get('mobile')}
+                        {cookies.get("mobile")}
                       </p>
                     </div>
                     <ul className={`${classes.userMenuList} tabList`}>
                       <li
-                        className={`activeTab`}
+                        className={tab === "main" ? `activeTab` : ""}
                         onClick={this.handleTab.bind(
                           this,
                           dispatch,
                           upgradeLevel,
-                          'main'
+                          "main"
                         )}
                       >
                         <Home viewBox="0 0 58.365 58.365" />
                         <a>پیشخوان</a>
                       </li>
                       <li
+                        className={tab === "report" ? `activeTab` : ""}
                         onClick={this.handleTab.bind(
                           this,
                           dispatch,
                           upgradeLevel,
-                          'report'
+                          "report"
                         )}
                       >
                         <Reports viewBox="0 0 21 21" />
@@ -154,9 +155,9 @@ class Panel extends Component {
                     >
                       <Menu
                         style={{
-                          width: '30px',
-                          height: '30px',
-                          marginLeft: '5px'
+                          width: "30px",
+                          height: "30px",
+                          marginLeft: "5px"
                         }}
                         viewBox="0 0 32 32"
                       />
@@ -177,9 +178,9 @@ class Panel extends Component {
                     >
                       <Menu
                         style={{
-                          width: '30px',
-                          height: '30px',
-                          marginLeft: '5px'
+                          width: "30px",
+                          height: "30px",
+                          marginLeft: "5px"
                         }}
                         viewBox="0 0 32 32"
                       />
@@ -188,7 +189,7 @@ class Panel extends Component {
                   <div
                     className={
                       !mobileCollapsed
-                        ? 'd-none'
+                        ? "d-none"
                         : `${classes.userMenu} ${classes.userMenuMobile}`
                     }
                   >
@@ -199,7 +200,7 @@ class Panel extends Component {
                           this,
                           dispatch,
                           upgradeLevel,
-                          'main'
+                          "main"
                         )}
                       >
                         <Home viewBox="0 0 58.365 58.365" />
@@ -210,7 +211,7 @@ class Panel extends Component {
                           this,
                           dispatch,
                           upgradeLevel,
-                          'report'
+                          "report"
                         )}
                       >
                         <Reports viewBox="0 0 21 21" />
