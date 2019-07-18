@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
-import Notification from '../../../assets/svg/notification';
-import User from '../../../assets/svg/user';
-import Logo from '../../../assets/svg/logo';
-import Logout from '../../../assets/svg/logout';
-import classes from './Header.module.sass';
-import { Consumer } from '../../../context';
-import { toast } from 'react-toastify';
-import Cookies from 'universal-cookie';
-import axios from 'axios';
+import React, { Component } from "react";
+import Notification from "../../../assets/svg/notification";
+import User from "../../../assets/svg/user";
+import Logo from "../../../assets/svg/logo";
+import Logout from "../../../assets/svg/logout";
+import classes from "./Header.module.sass";
+import { Consumer } from "../../../context";
+import { toast } from "react-toastify";
+import Cookies from "universal-cookie";
+import axios from "axios";
 
 const cookies = new Cookies();
 class Header extends Component {
@@ -15,36 +15,36 @@ class Header extends Component {
 
   logout = (dispatch, Apis, device_id, device_model, event) => {
     let data = new FormData();
-    data.set('device_type', 'w');
-    data.set('device_id', device_id);
-    data.set('device_model', device_model);
+    data.set("device_type", "w");
+    data.set("device_id", device_id);
+    data.set("device_model", device_model);
     try {
       this.setState({ loading: true });
-      console.log(Apis['logout']);
+      console.log(Apis["logout"]);
       axios
-        .post(Apis['logout'], data, {
+        .post(Apis["logout"], data, {
           headers: {
-            Authorization: `Aparnik ${cookies.get('token')}`,
-            'Content-Type': 'application/json'
+            Authorization: `Aparnik ${cookies.get("token")}`,
+            "Content-Type": "application/json"
           }
         })
         .then(res => {
           console.log(res);
           this.setState({ loading: false });
           if (res.status === 200) {
-            cookies.remove('token');
-            cookies.remove('mobile');
-            cookies.remove('fcmtoken');
+            cookies.remove("token");
+            cookies.remove("mobile");
+            cookies.remove("fcmtoken");
             window.location.reload();
           }
-          dispatch({ type: 'LOGOUT', payload: false });
+          dispatch({ type: "LOGOUT", payload: false });
         })
         .catch(error => {
           this.setState({ loading: false });
           console.log(error);
         });
     } catch (error) {
-      toast.error('خطایی رخ داده است دوبازه امتحان کنید');
+      toast.error("خطایی رخ داده است دوبازه امتحان کنید");
     }
   };
 
@@ -91,10 +91,7 @@ class Header extends Component {
                         classes.notifiWrapper
                       }`}
                     >
-                      <button
-                        className={`btn ${classes.notificationbtn}`}
-                        role="button"
-                      >
+                      <button className={`btn ${classes.notificationbtn}`}>
                         <Notification
                           viewBox="0 0 512 512"
                           width="15px"
@@ -118,24 +115,24 @@ class Header extends Component {
                         aria-labelledby="navbarDropdown"
                       >
                         <a className={`dropdown-item ${classes.userInfo}`}>
-                          {user && user['avatar'] ? (
-                            <img src={user['avatar']['file_url']} />
+                          {user && user["avatar"] ? (
+                            <img src={user["avatar"]["file_url"]} />
                           ) : (
                             <User
                               style={{
-                                width: '25px',
-                                height: '25px',
-                                marginLeft: '5px',
-                                float: 'right'
+                                width: "25px",
+                                height: "25px",
+                                marginLeft: "5px",
+                                float: "right"
                               }}
                               viewBox="0 0 53 53"
                             />
                           )}
 
-                          {user['first_name'] && user['last_name'] ? (
+                          {user["first_name"] && user["last_name"] ? (
                             <p className={`${classes.username} mb-2`}>{`${
-                              user['first_name']
-                            } ${user['last_name']}`}</p>
+                              user["first_name"]
+                            } ${user["last_name"]}`}</p>
                           ) : (
                             <p>کاربر میهمان</p>
                           )}
@@ -152,10 +149,10 @@ class Header extends Component {
                         >
                           <Logout
                             style={{
-                              width: '20px',
-                              height: '20px',
-                              marginLeft: '5px',
-                              float: 'right'
+                              width: "20px",
+                              height: "20px",
+                              marginLeft: "5px",
+                              float: "right"
                             }}
                           />
                           خروج

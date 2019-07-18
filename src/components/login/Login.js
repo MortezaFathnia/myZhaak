@@ -135,7 +135,7 @@ class Login extends Component {
     }
   };
   render() {
-    const { mobile, errors, code, isActive } = this.state;
+    const { mobile, errors, code } = this.state;
     return (
       <Consumer>
         {value => {
