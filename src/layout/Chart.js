@@ -1,17 +1,17 @@
-import React, { Component } from 'react';
-import ApexCharts from 'apexcharts';
-import uuid from 'uuid';
+import React, { Component } from "react";
+import ApexCharts from "apexcharts";
+import uuid from "uuid";
 class Chart extends Component {
   constructor(props) {
     super(props);
     this.intialConfig(props);
     this.id = uuid();
-    this.chart = '';
+    this.chart = "";
   }
   intialConfig = props => {
     switch (props.type) {
-      case 'bar':
-        this.state = {
+      case "bar":
+        this.setState = {
           options: {
             chart: {
               type: props.type
@@ -40,14 +40,44 @@ class Chart extends Component {
           }
         };
         break;
-      case 'pie' || 'donut':
-        this.state = {
+      case "pie" || "donut":
+        this.setState = {
           options: {
             chart: {
               type: props.type
             },
             series: props.data,
             labels: props.categories
+          }
+        };
+        break;
+      default:
+        this.setState = {
+          options: {
+            chart: {
+              type: props.type
+            },
+            series: [
+              {
+                name: props.name,
+                data: props.data
+              }
+            ],
+            xaxis: {
+              categories: props.categories
+              /*   labels: {
+                    formatter: function(value) {
+                      let res = '';
+                      if (Object.toString(value).length > 25) {
+                        res = value.slice(0, 25) + '***';
+                        console.log(res);
+                        return res;
+                      }   else {
+                        return value;
+                      } 
+                    }
+                  } */
+            }
           }
         };
         break;
@@ -59,7 +89,7 @@ class Chart extends Component {
       this.chart.destroy();
     }
     this.chart = new ApexCharts(
-      document.querySelector('#chart' + this.id),
+      document.querySelector("#chart" + this.id),
       this.state.options
     );
 
