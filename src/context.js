@@ -3,6 +3,7 @@ import axios from "axios";
 import firebase from "firebase/app";
 import Cookies from "universal-cookie";
 import "firebase/auth"; // This line is important
+import "@firebase/messaging";
 import { toast } from "react-toastify";
 
 export const googleProvider = new firebase.auth.GoogleAuthProvider();
@@ -173,6 +174,7 @@ export class Provider extends Component {
         return messaging.getToken();
       })
       .then(function(token) {
+        console.log(token);
         cookies.set("fcmtoken", token, { path: "/" });
         let data = new FormData();
         data.set("device_id", guid());
@@ -219,6 +221,7 @@ export class Provider extends Component {
         headers: header
       })
       .then(resApi => {
+        console.log(resApi);
         this.setState({ apiUrl: resApi.data.url });
         this.setState({ adminUrl: resApi.data["url_admin"] });
         this.setState({ device_id: guid() });
@@ -230,8 +233,6 @@ export class Provider extends Component {
         ) {
           this.setState({ upgradeLevel: true });
         }
-        ready.home = true;
-        this.setState({ loadingOverlay: false });
         //2- logined users
         if (cookies.get("token")) {
           this.verifyToken();
