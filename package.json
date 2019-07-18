@@ -1,6 +1,7 @@
 {
   "name": "adminpanel",
   "version": "0.1.0",
+  "homepage": "https://example.com",
   "private": true,
   "dependencies": {
     "apexcharts": "^3.8.1",
@@ -9,8 +10,11 @@
     "classname": "0.0.0",
     "firebase": "^6.1.0",
     "jalali-moment": "^3.3.2",
+    "jquery": "^3.4.1",
     "moment-jalaali": "^0.8.3",
+    "mv": "^2.1.1",
     "node-sass": "^4.12.0",
+    "popper.js": "^1.15.0",
     "rc-color-picker": "^1.2.6",
     "react": "^16.8.6",
     "react-advance-jalaali-datepicker": "^1.2.2",
@@ -28,13 +32,12 @@
     "react-tiny-popover": "^3.4.2",
     "react-toastify": "^5.1.1",
     "universal-cookie": "^4.0.0",
-    "jquery": "^3.4.1",
-    "popper.js": "^1.15.0",
     "uuid": "^3.3.2"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "postbuild": "node ./postbuild.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
