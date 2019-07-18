@@ -125,7 +125,7 @@ class Header extends Component {
                                 marginLeft: "5px",
                                 float: "right"
                               }}
-                              viewBox="0 0 53 53"
+                              viewBox="0 0 32 32"
                             />
                           )}
 
