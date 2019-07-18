@@ -113,7 +113,7 @@ export class Provider extends Component {
       })
       .catch(function(error) {
         this.logout();
-        console.log('error Occured. ');
+        console.log('error in verify token', error);
       });
   };
 
@@ -148,10 +148,37 @@ export class Provider extends Component {
           console.log(error);
         });
     } catch (error) {
+      console.log('error in logout system', error);
       toast.error('خطایی رخ داده است دوبازه امتحان کنید');
     }
   };
 
+  //sending fcmtoken to Api
+  sendingFcmTokentoApi = token => {
+    let fcmApi =
+      'https://api.zhaak.com/api/v1/aparnik/users/notification-add-token/';
+    let header = cookies.get('token')
+      ? {
+          Authorization: `Aparnik ${cookies.get('token')}`,
+          'Content-Type': 'application/json'
+        }
+      : '';
+    let data = new FormData();
+    data.set('device_id', guid());
+    data.set('device_model', 'iphone 6plus');
+    data.set('device_type', 'w');
+    data.set('fcm_token', token);
+    axios
+      .post(fcmApi, data, { headers: header })
+      .then(res => {
+        console.log('success to sending to fcmApi', res);
+      })
+      .catch(error => {
+        console.log('error to sending to fcmApi', error);
+      });
+  };
+
+  //get permission Firebase
   getPermissionFirebase = () => {
     // Your web app's Firebase configuration
     var firebaseConfig = {
@@ -173,27 +200,16 @@ export class Provider extends Component {
         console.log('Have Permission!');
         return messaging.getToken();
       })
+      // .catch(error => console.log(error))
       .then(function(token) {
         console.log(token);
         cookies.set('fcmtoken', token, { path: '/' });
-        let data = new FormData();
-        data.set('device_id', guid());
-        data.set('device_model', 'iphone 6plus');
-        data.set('device_type', 'w');
-        data.set('fcm_token', token);
-        axios
-          .post(
-            'https://api.zhaak.com/api/v1/aparnik/users/notification-add-token/',
-            data
-          )
-          .then(res => {
-            ready.fcmToken = true;
-          });
+        this.sendingFcmTokentoApi(token);
       })
       .catch(function(error) {
-        console.log('error Occured. ');
+        console.log('error in getting token from firebase', error);
+        this.sendingFcmTokentoApi('noPermission');
       });
-    // this.setState({ loadingOverlay: false });
   };
   async componentDidMount() {
     // 1- get home api
@@ -244,8 +260,7 @@ export class Provider extends Component {
         }
       })
       .catch(function(error) {
-        console.log(error);
-        console.log('error Occured. ');
+        console.log('error in getting home api', error);
       });
   }
   render() {
