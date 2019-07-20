@@ -70,6 +70,11 @@ const reducer = (state, action) => {
         isAuthenticated: action.payload
       };
     }
+    case "SIGNUP": {
+      return {
+        isRegistered: action.payload
+      };
+    }
     default:
       return state;
   }

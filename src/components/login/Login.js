@@ -111,6 +111,7 @@ class Login extends Component {
           if (res.status === 200) {
             dispatch({ type: "CONFIRM", payload: res.data.user }, () => {});
             if (res.data.user["is_new_registered"]) {
+              console.log(res.data.user["is_new_registered"]);
               this.props.history.push("/signup");
             } else {
               this.getAdminUrl(dispatch, res.data.token);
