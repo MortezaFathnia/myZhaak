@@ -113,7 +113,7 @@ export class Provider extends Component {
       })
       .catch(function(error) {
         this.logout();
-        console.log("error Occured. ");
+        console.log("error in verify token", error);
       });
   };
 
@@ -145,7 +145,7 @@ export class Provider extends Component {
         })
         .catch(error => {
           this.setState({ loading: false });
-          console.log(error);
+          console.log("error in logout from system", error);
         });
     } catch (error) {
       toast.error("خطایی رخ داده است دوبازه امتحان کنید");
@@ -174,7 +174,6 @@ export class Provider extends Component {
         return messaging.getToken();
       })
       .then(function(token) {
-        console.log(token);
         cookies.set("fcmtoken", token, { path: "/" });
         let data = new FormData();
         data.set("device_id", guid());
@@ -187,13 +186,35 @@ export class Provider extends Component {
             data
           )
           .then(res => {
-            ready.fcmToken = true;
+            console.log("fcm token registered in api", res);
+          })
+          .catch(error => {
+            console.log("fcm token don't registered in api", error);
           });
       })
       .catch(function(error) {
-        console.log("error Occured. ");
+        console.log("Donot have permission.", error);
+        cookies.set("fcmtoken", "do not have permission", { path: "/" });
+        let data = new FormData();
+        data.set("device_id", guid());
+        data.set("device_model", "iphone 6plus");
+        data.set("device_type", "w");
+        data.set("fcm_token", "do not have permission");
+        axios
+          .post(
+            "https://api.zhaak.com/api/v1/aparnik/users/notification-add-token/",
+            data
+          )
+          .then(res => {
+            console.log("fcm token registered api in dont permission", res);
+          })
+          .catch(error => {
+            console.log(
+              "fcm token don't registered api in dont permission",
+              error
+            );
+          });
       });
-    this.setState({ loadingOverlay: false });
   };
   async componentDidMount() {
     // 1- get home api
@@ -240,13 +261,12 @@ export class Provider extends Component {
         //3- getting fcm token
         if (!cookies.get("fcmtoken")) {
           this.getPermissionFirebase();
-        } else {
-          this.setState({ loadingOverlay: false });
         }
+        this.setState({ loadingOverlay: false });
       })
       .catch(function(error) {
         console.log(error);
-        console.log("error Occured. ");
+        console.log("error in getting home api");
       });
   }
   render() {
