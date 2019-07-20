@@ -301,7 +301,7 @@ export class Provider extends Component {
               sendingFcmTokentoApi(token);
             })
             .catch(error => {
-              sendingFcmTokentoApi('');
+              sendingFcmTokentoApi('dasdsadas');
             });
         }
         this.setState({ loadingOverlay: false });
