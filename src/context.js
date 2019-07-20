@@ -298,10 +298,10 @@ export class Provider extends Component {
           // this.getPermissionFirebase();
           askForPermissioToReceiveNotifications()
             .then(token => {
-              console.log(token);
+              sendingFcmTokentoApi(token);
             })
             .catch(error => {
-              console.log(error);
+              sendingFcmTokentoApi('');
             });
         }
         this.setState({ loadingOverlay: false });
