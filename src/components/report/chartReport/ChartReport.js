@@ -169,17 +169,6 @@ class ChartReport extends Component {
                     <div className={`form-row form-group text-right`}>
                       <div className={`col-12`}>
                         <label>فیلد مورد نظر را انتخاب کنید:</label>
-                        {/* <SelectOption
-                          label="یک مورد را انتخاب کنید"
-                          onChange={event =>
-                            this.setState({
-                              courseFilter: JSON.parse(event.target.value)
-                            })
-                          }
-                          options={courseFilters}
-                          titleKey={'label'}
-                          id="filterType"
-                        /> */}
                         <Select
                           value={courseFilter}
                           onChange={courseFilter =>
