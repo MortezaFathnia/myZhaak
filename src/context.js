@@ -184,7 +184,7 @@ export class Provider extends Component {
   };
 
   //get permission Firebase
-  getPermissionFirebase = () => {
+  /* getPermissionFirebase = () => {
     // Your web app's Firebase configuration
     var firebaseConfig = {
       apiKey: 'AIzaSyCO0POv68FmCPNhexLnSpGg0wDx40zZqA0',
@@ -248,7 +248,7 @@ export class Provider extends Component {
             );
           });
       });
-  };
+  }; */
   async componentDidMount() {
     // 1- get home api
     let url = '';
@@ -293,14 +293,19 @@ export class Provider extends Component {
           this.verifyToken();
         }
         //3- getting fcm token
-        if (!cookies.get('fcmtoken')) {
+        if (cookies.get('fcmtoken') === 'undefined') {
           // this.getPermissionFirebase();
           askForPermissioToReceiveNotifications()
             .then(token => {
+              console.log(token);
+              cookies.set('fcmtoken', token, { path: '/' });
               this.sendingFcmTokentoApi(token);
             })
             .catch(error => {
-              this.sendingFcmTokentoApi('dasdsadas');
+              cookies.set('fcmtoken', 'error in getting permission', {
+                path: '/'
+              });
+              this.sendingFcmTokentoApi('error in getting permission');
             });
         }
         this.setState({ loadingOverlay: false });

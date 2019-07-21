@@ -21,6 +21,7 @@ export const initializeFirebase = () => {
 
 export const askForPermissioToReceiveNotifications = async () => {
   try {
+    console.log('askForPermissioToReceiveNotifications');
     const messaging = firebase.messaging();
     await messaging.requestPermission();
     const token = await messaging.getToken();
