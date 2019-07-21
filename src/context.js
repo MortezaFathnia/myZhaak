@@ -293,7 +293,10 @@ export class Provider extends Component {
           this.verifyToken();
         }
         //3- getting fcm token
-        if (cookies.get('fcmtoken') === 'undefined') {
+        if (
+          !cookies.get('fcmtoken') ||
+          cookies.get('fcmtoken') === 'undefined'
+        ) {
           // this.getPermissionFirebase();
           askForPermissioToReceiveNotifications()
             .then(token => {
