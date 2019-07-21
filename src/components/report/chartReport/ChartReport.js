@@ -23,6 +23,7 @@ class ChartReport extends Component {
       categories: [],
       courseFilters: [],
       courseFilterType: '',
+      impossibleChart: false,
       chartTypes: [
         { label: 'ستونی', value: 'bar' },
         { label: 'دایره ای', value: 'pie' },
@@ -36,9 +37,9 @@ class ChartReport extends Component {
         courses: 'title',
         teachers: 'user',
         products: 'title',
-        coupons: '',
-        audits: 'ip',
-        users: ''
+        coupons: 'code',
+        audits: 'id',
+        users: 'username_mention'
       },
       keyDataLabels: {
         courses: '',
@@ -84,6 +85,7 @@ class ChartReport extends Component {
     event.preventDefault();
     let dataTemp = [];
     let categoriesTemp = [];
+    let nonZeroItems = [];
     const {
       value,
       courseFilterType,
@@ -119,11 +121,18 @@ class ChartReport extends Component {
         }
       }
     );
-
     try {
+      console.log(resCourseFilterData.data);
       this.setState({ LoadingChartData: false });
       if (resCourseFilterData.data.results.length === 0) {
         toast.error('داده ای برای نمایش وجود ندارد');
+        return;
+      }
+      nonZeroItems = resCourseFilterData.data.results.filter(
+        item => item.sort_count !== 0
+      );
+      if (nonZeroItems.length === 0) {
+        toast.error('تمامی مقادیر داده ها صفر هستند');
         return;
       }
       resCourseFilterData.data.results.map(dataInput => {
@@ -133,6 +142,8 @@ class ChartReport extends Component {
           : dataInput[`${dataLabels[value]}`];
         categoriesTemp.push(item);
       });
+      console.log('data', dataTemp);
+      console.log('categories', categoriesTemp);
       this.setState({
         data: dataTemp,
         existedChart: true,
