@@ -1,15 +1,16 @@
-import React, { Component } from "react";
-import axios from "axios";
-import { toast } from "react-toastify";
-import LoadingOverlay from "react-loading-overlay";
-import Cookies from "universal-cookie";
-import Chart from "../../../layout/Chart";
-import SelectOption from "../../../layout/SelectOption";
-import Settings from "../../../assets/svg/settings";
-import { Consumer } from "../../../context";
-import Logo from "../../../assets/svg/logo";
+import React, { Component } from 'react';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import LoadingOverlay from 'react-loading-overlay';
+import Cookies from 'universal-cookie';
+import Chart from '../../../layout/Chart';
+import SelectOption from '../../../layout/SelectOption';
+import Settings from '../../../assets/svg/settings';
+import { Consumer } from '../../../context';
+import Select from 'react-select';
+import Logo from '../../../assets/svg/logo';
 
-import classes from "./ChartReport.module.sass";
+import classes from './ChartReport.module.sass';
 const cookies = new Cookies();
 class ChartReport extends Component {
   constructor(props) {
@@ -22,32 +23,32 @@ class ChartReport extends Component {
       categories: [],
       courseFilters: [],
       chartTypes: [
-        { label: "ستونی", value: "bar" },
-        { label: "دایره ای", value: "pie" },
-        { label: "دونات", value: "donut" }
+        { label: 'ستونی', value: 'bar' },
+        { label: 'دایره ای', value: 'pie' },
+        { label: 'دونات', value: 'donut' }
       ],
       sortTypes: [
-        { label: "صعودی", value: "" },
-        { label: "نزولی", value: "-" }
+        { label: 'صعودی', value: '' },
+        { label: 'نزولی', value: '-' }
       ],
       dataLabels: {
-        courses: "title",
-        teachers: "user",
-        products: "title",
-        coupons: "",
-        audits: "ip",
-        users: ""
+        courses: 'title',
+        teachers: 'user',
+        products: 'title',
+        coupons: '',
+        audits: 'ip',
+        users: ''
       },
       keyDataLabels: {
-        courses: "",
-        teachers: "last_name",
-        products: "title",
-        coupons: "",
-        audits: "",
-        users: ""
+        courses: '',
+        teachers: 'last_name',
+        products: 'title',
+        coupons: '',
+        audits: '',
+        users: ''
       },
-      sortType: { value: "-" },
-      chartType: "",
+      sortType: { value: '-' },
+      chartType: '',
       existedChart: false,
       Loading: true,
       LoadingChartData: false,
@@ -59,8 +60,8 @@ class ChartReport extends Component {
     const { value, adminUrl } = this.state;
     const resCourseFilterType = await axios.get(adminUrl[`${value}-sort`], {
       headers: {
-        Authorization: `Aparnik ${cookies.get("token")}`,
-        "Content-Type": "application/json"
+        Authorization: `Aparnik ${cookies.get('token')}`,
+        'Content-Type': 'application/json'
       }
     });
     try {
@@ -69,7 +70,7 @@ class ChartReport extends Component {
         Loading: false
       });
     } catch (error) {
-      toast.error("خطایی رخ داده است دوباره امتحان کنید");
+      toast.error('خطایی رخ داده است دوباره امتحان کنید');
     }
   }
   submitFilter = async (adminUrl, event) => {
@@ -85,7 +86,7 @@ class ChartReport extends Component {
       keyDataLabels
     } = this.state;
     if (!value) {
-      this.setState({ errors: { value: "فیلد نوع نمودار اجباری است" } });
+      this.setState({ errors: { value: 'فیلد نوع نمودار اجباری است' } });
       return;
     }
     // if (!sortType) {
@@ -94,7 +95,7 @@ class ChartReport extends Component {
     // }
 
     if (!courseFilter) {
-      this.setState({ errors: { courseFilter: "فیلد نوع فیلتر اجباری است" } });
+      this.setState({ errors: { courseFilter: 'فیلد نوع فیلتر اجباری است' } });
       return;
     }
     this.setState({ LoadingChartData: true });
@@ -104,8 +105,8 @@ class ChartReport extends Component {
       }`,
       {
         headers: {
-          Authorization: `Aparnik ${cookies.get("token")}`,
-          "Content-Type": "application/json"
+          Authorization: `Aparnik ${cookies.get('token')}`,
+          'Content-Type': 'application/json'
         }
       }
     );
@@ -113,7 +114,7 @@ class ChartReport extends Component {
     try {
       this.setState({ LoadingChartData: false });
       if (resCourseFilterData.data.results.length === 0) {
-        toast.error("داده ای برای نمایش وجود ندارد");
+        toast.error('داده ای برای نمایش وجود ندارد');
         return;
       }
       resCourseFilterData.data.results.map(dataInput => {
@@ -132,7 +133,7 @@ class ChartReport extends Component {
         this.child.current.chartRender();
       }
     } catch (error) {
-      toast.error("خطایی رخ داده است دوباره امتحان کنید");
+      toast.error('خطایی رخ داده است دوباره امتحان کنید');
     }
   };
   render() {
@@ -155,7 +156,7 @@ class ChartReport extends Component {
         {value => {
           const { adminUrl } = value;
           return (
-            <div id={id} style={{ direction: "rtl" }}>
+            <div id={id} style={{ direction: 'rtl' }}>
               <LoadingOverlay
                 active={Loading}
                 spinner
@@ -168,7 +169,7 @@ class ChartReport extends Component {
                     <div className={`form-row form-group text-right`}>
                       <div className={`col-12`}>
                         <label>فیلد مورد نظر را انتخاب کنید:</label>
-                        <SelectOption
+                        {/* <SelectOption
                           label="یک مورد را انتخاب کنید"
                           onChange={event =>
                             this.setState({
@@ -176,7 +177,21 @@ class ChartReport extends Component {
                             })
                           }
                           options={courseFilters}
-                          titleKey={"label"}
+                          titleKey={'label'}
+                          id="filterType"
+                        /> */}
+                        <Select
+                          value={courseFilter}
+                          onChange={courseFilter =>
+                            this.setState({
+                              courseFilter
+                            })
+                          }
+                          options={courseFilters}
+                          rtl={true}
+                          classNamePrefix="aparnik"
+                          className={`aparnik_multiSelect`}
+                          placeholder="یک مورد را انتخاب کنید"
                           id="filterType"
                         />
                       </div>
@@ -184,15 +199,18 @@ class ChartReport extends Component {
                     <div className={`form-row form-group text-right`}>
                       <div className={`col-12`}>
                         <label>نوع نمودار:</label>
-                        <SelectOption
-                          label="یک مورد را انتخاب کنید"
-                          onChange={e =>
+                        <Select
+                          value={chartType}
+                          onChange={chartType =>
                             this.setState({
-                              chartType: JSON.parse(e.target.value)
+                              chartType
                             })
                           }
                           options={chartTypes}
-                          titleKey={"label"}
+                          rtl={true}
+                          classNamePrefix="aparnik"
+                          className={`aparnik_multiSelect`}
+                          placeholder="یک مورد را انتخاب کنید"
                           id="chartType"
                         />
                       </div>
@@ -216,9 +234,9 @@ class ChartReport extends Component {
                         <Settings
                           className={`${classes.iconSettings}`}
                           style={{
-                            width: "12px",
-                            height: "12px",
-                            marginLeft: "4px"
+                            width: '12px',
+                            height: '12px',
+                            marginLeft: '4px'
                           }}
                           fill="#fff"
                           viewBox="0 0 478.703 478.703"
@@ -250,7 +268,7 @@ class ChartReport extends Component {
                             width="40px"
                             viewBox="0 0 500 500"
                           />
-                          <p style={{ color: "#737381" }}>
+                          <p style={{ color: '#737381' }}>
                             موردی برای نمایش وجود ندارد
                           </p>
                         </div>
