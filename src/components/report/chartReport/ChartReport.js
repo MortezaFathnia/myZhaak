@@ -59,8 +59,7 @@ class ChartReport extends Component {
     this.child = React.createRef();
   }
   async componentDidMount() {
-    const { value, adminUrl, courseFilters } = this.state;
-    console.log(111);
+    const { value, adminUrl } = this.state;
     const resCourseFilterType = await axios.get(adminUrl[`${value}-sort`], {
       headers: {
         Authorization: `Aparnik ${cookies.get('token')}`,
