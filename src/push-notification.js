@@ -13,11 +13,9 @@ export const initializeFirebase = () => {
   firebase.initializeApp(firebaseConfig);
 
   navigator.serviceWorker
-    .register('../public/firebase-messaging-sw.js')
+    .register('./firebase-messaging-sw.js')
     .then(async registration => {
       firebase.messaging().useServiceWorker(registration);
-      const token = await firebase.messaging.getToken();
-      console.log('token serviceWorker:', token);
     });
 };
 

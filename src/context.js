@@ -161,8 +161,7 @@ export class Provider extends Component {
 
   //sending fcmtoken to Api
   sendingFcmTokentoApi = token => {
-    let fcmApi =
-      'https://api.zhaak.com/api/v1/aparnik/users/notification-add-token/';
+    const { apiUrl } = this.state;
     let header = cookies.get('token')
       ? {
           Authorization: `Aparnik ${cookies.get('token')}`,
@@ -175,7 +174,7 @@ export class Provider extends Component {
     data.set('device_type', 'w');
     data.set('fcm_token', token);
     axios
-      .post(fcmApi, data, { headers: header })
+      .post(apiUrl['FCM-add-token'], data, { headers: header })
       .then(res => {
         console.log('success to sending to fcmApi', res);
       })
