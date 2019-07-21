@@ -22,6 +22,7 @@ class ChartReport extends Component {
       data: [],
       categories: [],
       courseFilters: [],
+      courseFilterType: '',
       chartTypes: [
         { label: 'ستونی', value: 'bar' },
         { label: 'دایره ای', value: 'pie' },
@@ -57,7 +58,8 @@ class ChartReport extends Component {
     this.child = React.createRef();
   }
   async componentDidMount() {
-    const { value, adminUrl } = this.state;
+    const { value, adminUrl, courseFilters } = this.state;
+    console.log(111);
     const resCourseFilterType = await axios.get(adminUrl[`${value}-sort`], {
       headers: {
         Authorization: `Aparnik ${cookies.get('token')}`,
@@ -65,11 +67,16 @@ class ChartReport extends Component {
       }
     });
     try {
+      let tempArray = [];
+      tempArray = resCourseFilterType.data.map(item => {
+        return { label: item.label, value: item.key };
+      });
       this.setState({
-        courseFilters: resCourseFilterType.data,
+        courseFilters: tempArray,
         Loading: false
       });
     } catch (error) {
+      console.log(error);
       toast.error('خطایی رخ داده است دوباره امتحان کنید');
     }
   }
@@ -79,7 +86,7 @@ class ChartReport extends Component {
     let categoriesTemp = [];
     const {
       value,
-      courseFilter,
+      courseFilterType,
       sortType,
       existedChart,
       dataLabels,
@@ -94,14 +101,16 @@ class ChartReport extends Component {
     //   return;
     // }
 
-    if (!courseFilter) {
-      this.setState({ errors: { courseFilter: 'فیلد نوع فیلتر اجباری است' } });
+    if (!courseFilterType) {
+      this.setState({
+        errors: { courseFilterType: 'فیلد نوع فیلتر اجباری است' }
+      });
       return;
     }
     this.setState({ LoadingChartData: true });
     const resCourseFilterData = await axios.get(
       `${adminUrl[`${value}-list`]}?ordering=${sortType.value}${
-        courseFilter.key
+        courseFilterType.value
       }`,
       {
         headers: {
@@ -140,12 +149,12 @@ class ChartReport extends Component {
     const {
       label,
       courseFilters,
+      courseFilterType,
       data,
       categories,
       sortTypes,
       chartTypes,
       chartType,
-      courseFilter,
       existedChart,
       LoadingChartData,
       Loading
@@ -170,10 +179,10 @@ class ChartReport extends Component {
                       <div className={`col-12`}>
                         <label>فیلد مورد نظر را انتخاب کنید:</label>
                         <Select
-                          value={courseFilter}
-                          onChange={courseFilter =>
+                          value={courseFilterType}
+                          onChange={courseFilterType =>
                             this.setState({
-                              courseFilter
+                              courseFilterType
                             })
                           }
                           options={courseFilters}
@@ -181,7 +190,7 @@ class ChartReport extends Component {
                           classNamePrefix="aparnik"
                           className={`aparnik_multiSelect`}
                           placeholder="یک مورد را انتخاب کنید"
-                          id="filterType"
+                          id="couresFilterType"
                         />
                       </div>
                     </div>
@@ -239,7 +248,7 @@ class ChartReport extends Component {
                       <Chart
                         ref={this.child}
                         type={chartType.value}
-                        name={courseFilter.label}
+                        name={courseFilterType.label}
                         data={data}
                         categories={categories}
                         existedChart={existedChart}
