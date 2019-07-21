@@ -16,6 +16,7 @@ class Login extends Component {
   onChange = e => this.setState({ [e.target.name]: e.target.value });
 
   getAdminUrl = async (dispatch, token, domain) => {
+    console.log(domain);
     await axios
       .get(domain, {
         headers: {
@@ -147,8 +148,8 @@ class Login extends Component {
             number,
             device_id,
             os_version,
-            domain,
-            device_model
+            device_model,
+            domain
           } = value;
           return (
             <div>
@@ -163,8 +164,7 @@ class Login extends Component {
                       apiUrl,
                       device_id,
                       os_version,
-                      device_model,
-                      domain
+                      device_model
                     )}
                   >
                     <div className={classes.topBg} />
@@ -206,7 +206,8 @@ class Login extends Component {
                       apiUrl,
                       device_id,
                       os_version,
-                      device_model
+                      device_model,
+                      domain
                     )}
                   >
                     <div className={classes.topBg} />
