@@ -265,8 +265,8 @@ export class Provider extends Component {
       url = `${window.location.href.match(domainRegex)['0']}/api/v1/home`;
       this.setState({ domain: url });
     } else {
-      url = 'https://api.zhaak.com/api/v1/home';
-      this.setState({ domain: 'https://api.zhaak.com/api/v1/home' });
+      url = 'https://api.zhaak.com/api/v1/home/';
+      this.setState({ domain: 'https://api.zhaak.com/api/v1/home/' });
     }
     //getting home api with token, domain url
     console.log(header);
