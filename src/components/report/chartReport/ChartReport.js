@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import axios from "axios";
 import Request from "../../../api/request";
 import { toast } from "react-toastify";
 import LoadingOverlay from "react-loading-overlay";
@@ -61,25 +60,21 @@ class ChartReport extends Component {
   }
   async componentDidMount() {
     const { value, adminUrl } = this.state;
-    const resCourseFilterType = await axios.get(adminUrl[`${value}-sort`], {
-      headers: {
-        Authorization: `Aparnik ${cookies.get("token")}`,
-        "Content-Type": "application/json"
-      }
-    });
-    try {
-      let tempArray = [];
-      tempArray = resCourseFilterType.data.map(item => {
-        return { label: item.label, value: item.key };
+    Request(adminUrl[`${value}-sort`], "get", "", "Authorization")
+      .then(resCourseFilterType => {
+        let tempArray = [];
+        tempArray = resCourseFilterType.data.map(item => {
+          return { label: item.label, value: item.key };
+        });
+        this.setState({
+          courseFilters: tempArray,
+          Loading: false
+        });
+      })
+      .catch(err => {
+        this.setState({ Loading: false });
+        toast.error("خطایی رخ داده است دوباره امتحان کنید");
       });
-      this.setState({
-        courseFilters: tempArray,
-        Loading: false
-      });
-    } catch (error) {
-      console.log(error);
-      toast.error("خطایی رخ داده است دوباره امتحان کنید");
-    }
   }
   submitFilter = async (adminUrl, event) => {
     event.preventDefault();
@@ -110,48 +105,47 @@ class ChartReport extends Component {
       return;
     }
     this.setState({ LoadingChartData: true });
-    const resCourseFilterData = await axios.get(
+    Request(
       `${adminUrl[`${value}-list`]}?ordering=${sortType.value}${
         courseFilterType.value
       }`,
-      {
-        headers: {
-          Authorization: `Aparnik ${cookies.get("token")}`,
-          "Content-Type": "application/json"
+      "get",
+      "",
+      "Authorization"
+    )
+      .then(resCourseFilterData => {
+        this.setState({ LoadingChartData: false });
+        if (resCourseFilterData.data.results.length === 0) {
+          toast.error("داده ای برای نمایش وجود ندارد");
+          return;
         }
-      }
-    );
-    try {
-      this.setState({ LoadingChartData: false });
-      if (resCourseFilterData.data.results.length === 0) {
-        toast.error("داده ای برای نمایش وجود ندارد");
-        return;
-      }
-      nonZeroItems = resCourseFilterData.data.results.filter(
-        item => item.sort_count !== 0
-      );
-      if (nonZeroItems.length === 0) {
-        toast.error("تمامی مقادیر داده ها صفر هستند");
-        return;
-      }
-      resCourseFilterData.data.results.map(dataInput => {
-        dataTemp.push(dataInput.sort_count);
-        let item = keyDataLabels[value]
-          ? dataInput[`${dataLabels[value]}`][`${keyDataLabels[value]}`]
-          : dataInput[`${dataLabels[value]}`];
-        categoriesTemp.push(item);
+        nonZeroItems = resCourseFilterData.data.results.filter(
+          item => item.sort_count !== 0
+        );
+        if (nonZeroItems.length === 0) {
+          toast.error("تمامی مقادیر داده ها صفر هستند");
+          return;
+        }
+        resCourseFilterData.data.results.map(dataInput => {
+          dataTemp.push(dataInput.sort_count);
+          let item = keyDataLabels[value]
+            ? dataInput[`${dataLabels[value]}`][`${keyDataLabels[value]}`]
+            : dataInput[`${dataLabels[value]}`];
+          categoriesTemp.push(item);
+        });
+        this.setState({
+          data: dataTemp,
+          existedChart: true,
+          categories: categoriesTemp
+        });
+        if (existedChart) {
+          this.child.current.chartRender();
+        }
+      })
+      .catch(err => {
+        this.setState({ Loading: false });
+        toast.error("خطایی رخ داده است دوباره امتحان کنید");
       });
-      this.setState({
-        data: dataTemp,
-        existedChart: true,
-        categories: categoriesTemp
-      });
-      if (existedChart) {
-        this.child.current.chartRender();
-      }
-    } catch (error) {
-      toast.error("خطایی رخ داده است دوباره امتحان کنید");
-    }
   };
   render() {
     const {

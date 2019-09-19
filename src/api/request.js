@@ -5,7 +5,6 @@ import axios from "axios";
 
 const cookies = new Cookies();
 const Request = (apiUrl, type, data, Authorization) => {
-  console.log(apiUrl, type, data, Authorization);
   return new Promise((resolve, reject) => {
     let header = Authorization
       ? {
