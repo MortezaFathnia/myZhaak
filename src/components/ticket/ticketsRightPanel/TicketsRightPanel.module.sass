@@ -21,8 +21,8 @@
       margin-bottom: 0
 .ticketWrapper
   display: flex
+  width: 60%
   flex-direction: column
-  width: 70%
 .ticketContainer
   width: 100%
 .ticketId
@@ -35,7 +35,8 @@
   justify-content: center
   align-items: center
   flex-direction: column
-  padding-top: 8%  
+  padding-top: 8% 
+  height: calc(100vh - 43px) 
 .addBtn
   background-color: #6bb5ef
   border: none
@@ -51,6 +52,33 @@
     border-radius: 10px
     color: #737381
     font-size: .5rem
-    padding: 2px 3px
-    margin: -2px 3px 0 0
-    line-height: 1.5
+    padding: 2px 7px
+    margin: 3px 0px 0 0
+    width: 30px
+.ticketListItem
+    cursor: pointer
+.profileImg
+  width: 50px
+  height: 50px
+  border-radius: 50%
+  float: right
+.rightPanel
+  width: 22%
+  background: #F6F7FC
+  border-left: 1px solid #bdcabd
+  height: calc(100vh - 43px)
+  text-align: center
+  float: right
+  overflow: auto
+.addBtn
+  background-color: #6bb5ef !important
+  padding: 13px !important
+  border-radius: 50% !important
+  background: transparent
+  border: none
+  box-shadow: none
+.cotentAddTicket
+  margin-top: 15%
+@media (max-width: 768px) 
+  .rightPanel
+    width: 100%

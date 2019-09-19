@@ -1,16 +1,17 @@
-import React, { Component } from 'react';
-import axios from 'axios';
-import { toast } from 'react-toastify';
-import LoadingOverlay from 'react-loading-overlay';
-import Cookies from 'universal-cookie';
-import Chart from '../../../layout/Chart';
-import SelectOption from '../../../layout/SelectOption';
-import Settings from '../../../assets/svg/settings';
-import { Consumer } from '../../../context';
-import Select from 'react-select';
-import Logo from '../../../assets/svg/logo';
+import React, { Component } from "react";
+import axios from "axios";
+import Request from "../../../api/request";
+import { toast } from "react-toastify";
+import LoadingOverlay from "react-loading-overlay";
+import Cookies from "universal-cookie";
+import Chart from "../../../layout/Chart";
+import SelectOption from "../../../layout/SelectOption";
+import Settings from "../../../assets/svg/settings";
+import { Consumer } from "../../../context";
+import Select from "react-select";
+import Logo from "../../../assets/svg/logo";
 
-import classes from './ChartReport.module.sass';
+import classes from "./ChartReport.module.sass";
 const cookies = new Cookies();
 class ChartReport extends Component {
   constructor(props) {
@@ -22,35 +23,35 @@ class ChartReport extends Component {
       data: [],
       categories: [],
       courseFilters: [],
-      courseFilterType: '',
+      courseFilterType: "",
       impossibleChart: false,
       chartTypes: [
-        { label: 'ستونی', value: 'bar' },
-        { label: 'دایره ای', value: 'pie' },
-        { label: 'دونات', value: 'donut' }
+        { label: "ستونی", value: "bar" },
+        { label: "دایره ای", value: "pie" },
+        { label: "دونات", value: "donut" }
       ],
       sortTypes: [
-        { label: 'صعودی', value: '' },
-        { label: 'نزولی', value: '-' }
+        { label: "صعودی", value: "" },
+        { label: "نزولی", value: "-" }
       ],
       dataLabels: {
-        courses: 'title',
-        teachers: 'user',
-        products: 'title',
-        coupons: 'code',
-        audits: 'id',
-        users: 'username_mention'
+        courses: "title",
+        teachers: "user",
+        products: "title",
+        coupons: "code",
+        audits: "id",
+        users: "username_mention"
       },
       keyDataLabels: {
-        courses: '',
-        teachers: 'last_name',
-        products: 'title',
-        coupons: '',
-        audits: '',
-        users: ''
+        courses: "",
+        teachers: "last_name",
+        products: "title",
+        coupons: "",
+        audits: "",
+        users: ""
       },
-      sortType: { value: '-' },
-      chartType: '',
+      sortType: { value: "-" },
+      chartType: "",
       existedChart: false,
       Loading: true,
       LoadingChartData: false,
@@ -62,8 +63,8 @@ class ChartReport extends Component {
     const { value, adminUrl } = this.state;
     const resCourseFilterType = await axios.get(adminUrl[`${value}-sort`], {
       headers: {
-        Authorization: `Aparnik ${cookies.get('token')}`,
-        'Content-Type': 'application/json'
+        Authorization: `Aparnik ${cookies.get("token")}`,
+        "Content-Type": "application/json"
       }
     });
     try {
@@ -77,7 +78,7 @@ class ChartReport extends Component {
       });
     } catch (error) {
       console.log(error);
-      toast.error('خطایی رخ داده است دوباره امتحان کنید');
+      toast.error("خطایی رخ داده است دوباره امتحان کنید");
     }
   }
   submitFilter = async (adminUrl, event) => {
@@ -94,7 +95,7 @@ class ChartReport extends Component {
       keyDataLabels
     } = this.state;
     if (!value) {
-      this.setState({ errors: { value: 'فیلد نوع نمودار اجباری است' } });
+      this.setState({ errors: { value: "فیلد نوع نمودار اجباری است" } });
       return;
     }
     // if (!sortType) {
@@ -104,7 +105,7 @@ class ChartReport extends Component {
 
     if (!courseFilterType) {
       this.setState({
-        errors: { courseFilterType: 'فیلد نوع فیلتر اجباری است' }
+        errors: { courseFilterType: "فیلد نوع فیلتر اجباری است" }
       });
       return;
     }
@@ -115,23 +116,22 @@ class ChartReport extends Component {
       }`,
       {
         headers: {
-          Authorization: `Aparnik ${cookies.get('token')}`,
-          'Content-Type': 'application/json'
+          Authorization: `Aparnik ${cookies.get("token")}`,
+          "Content-Type": "application/json"
         }
       }
     );
     try {
-      console.log(resCourseFilterData.data);
       this.setState({ LoadingChartData: false });
       if (resCourseFilterData.data.results.length === 0) {
-        toast.error('داده ای برای نمایش وجود ندارد');
+        toast.error("داده ای برای نمایش وجود ندارد");
         return;
       }
       nonZeroItems = resCourseFilterData.data.results.filter(
         item => item.sort_count !== 0
       );
       if (nonZeroItems.length === 0) {
-        toast.error('تمامی مقادیر داده ها صفر هستند');
+        toast.error("تمامی مقادیر داده ها صفر هستند");
         return;
       }
       resCourseFilterData.data.results.map(dataInput => {
@@ -141,8 +141,6 @@ class ChartReport extends Component {
           : dataInput[`${dataLabels[value]}`];
         categoriesTemp.push(item);
       });
-      console.log('data', dataTemp);
-      console.log('categories', categoriesTemp);
       this.setState({
         data: dataTemp,
         existedChart: true,
@@ -152,7 +150,7 @@ class ChartReport extends Component {
         this.child.current.chartRender();
       }
     } catch (error) {
-      toast.error('خطایی رخ داده است دوباره امتحان کنید');
+      toast.error("خطایی رخ داده است دوباره امتحان کنید");
     }
   };
   render() {
@@ -175,7 +173,7 @@ class ChartReport extends Component {
         {value => {
           const { adminUrl } = value;
           return (
-            <div id={id} style={{ direction: 'rtl' }}>
+            <div id={id} style={{ direction: "rtl" }}>
               <LoadingOverlay
                 active={Loading}
                 spinner
@@ -242,9 +240,9 @@ class ChartReport extends Component {
                         <Settings
                           className={`${classes.iconSettings}`}
                           style={{
-                            width: '12px',
-                            height: '12px',
-                            marginLeft: '4px'
+                            width: "12px",
+                            height: "12px",
+                            marginLeft: "4px"
                           }}
                           fill="#fff"
                           viewBox="0 0 478.703 478.703"
@@ -276,7 +274,7 @@ class ChartReport extends Component {
                             width="40px"
                             viewBox="0 0 500 500"
                           />
-                          <p style={{ color: '#737381' }}>
+                          <p style={{ color: "#737381" }}>
                             موردی برای نمایش وجود ندارد
                           </p>
                         </div>

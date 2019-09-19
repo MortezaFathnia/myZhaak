@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Menu from "../../../assets/svg/menu";
 import Reports from "../../../assets/svg/reports";
 import Home from "../../../assets/svg/home";
+import Ticket from "../../../assets/svg/ticket";
 import User from "../../../assets/svg/userPanel";
 import ModalAccess from "../../../layout/ModalAccess";
 import Cookies from "universal-cookie";
@@ -62,14 +63,10 @@ class Panel extends Component {
               <ModalAccess show={true} ref={this.child} />
               {collapsed ? (
                 <div
-                  className={`${
-                    classes.panelWrapper
-                  } d-none d-md-block d-xl-block`}
+                  className={`${classes.panelWrapper} d-none d-md-block d-xl-block`}
                 >
                   <div
-                    className={`${
-                      classes.pishkanBtnWrapper
-                    } d-none d-md-block d-xl-block`}
+                    className={`${classes.pishkanBtnWrapper} d-none d-md-block d-xl-block`}
                   >
                     <button
                       className={`btn ${classes.pishkanBtn}`}
@@ -126,6 +123,18 @@ class Panel extends Component {
                         <a>پیشخوان</a>
                       </li>
                       <li
+                        className={tab === "ticket" ? `activeTab` : ""}
+                        onClick={this.handleTab.bind(
+                          this,
+                          dispatch,
+                          upgradeLevel,
+                          "ticket"
+                        )}
+                      >
+                        <Ticket viewBox="0 0 27.036 8.547" />
+                        <a>تیکت ها</a>
+                      </li>
+                      <li
                         className={tab === "report" ? `activeTab` : ""}
                         onClick={this.handleTab.bind(
                           this,
@@ -145,9 +154,7 @@ class Panel extends Component {
                   className={`${classes.panelWrapper} ${classes.UnCollapsed}`}
                 >
                   <div
-                    className={`${
-                      classes.pishkanBtnWrapper
-                    } d-none d-md-block d-xl-block`}
+                    className={`${classes.pishkanBtnWrapper} d-none d-md-block d-xl-block`}
                   >
                     <button
                       className={`btn ${classes.pishkanBtn}`}
@@ -167,9 +174,7 @@ class Panel extends Component {
                     className={
                       mobileCollapsed
                         ? `${classes.pishkanBtnWrapper} pr-2 d-block d-sm-none`
-                        : `${classes.pishkanBtnWrapper} ${
-                            classes.pishkanMobileBtnWrapper
-                          } pr-2 d-block d-sm-none`
+                        : `${classes.pishkanBtnWrapper} ${classes.pishkanMobileBtnWrapper} pr-2 d-block d-sm-none`
                     }
                   >
                     <button
@@ -205,7 +210,17 @@ class Panel extends Component {
                       >
                         <Home viewBox="0 0 58.365 58.365" />
                       </li>
-
+                      <li
+                        className={tab === "ticket" ? `activeTab` : ""}
+                        onClick={this.handleTab.bind(
+                          this,
+                          dispatch,
+                          upgradeLevel,
+                          "ticket"
+                        )}
+                      >
+                        <Ticket viewBox="0 0 27.036 8.547" />
+                      </li>
                       <li
                         onClick={this.handleTab.bind(
                           this,
