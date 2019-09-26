@@ -1,0 +1,3 @@
+[submodule "src/components/ticket"]
+	path = src/components/ticket
+	url = https://lab.aparnik.com/Fathnia/tickets.git
